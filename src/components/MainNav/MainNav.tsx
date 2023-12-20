@@ -11,7 +11,7 @@ export default function MainNav() {
 
   return (
     <Fragment>
-      <Navbar className='fixed w-full' fluid rounded border>
+      <Navbar className='mb-6' fluid rounded border>
         <Link to={"/"}>
           <Navbar.Brand className='lg:ml-10'>
             <img src="/src/assets/logo.png" className="mr-3 h-10 sm:h-9" alt="Nibiru Digital Book" />
@@ -24,7 +24,7 @@ export default function MainNav() {
           </Link>
           <Navbar.Toggle />
         </div>
-        <Navbar.Collapse className='-ml-10'>
+        <Navbar.Collapse className='lg:-ml-10'>
           <Link to={"/"}>
             <Navbar.Link className='flex items-center' active={location.pathname === "/" ? true : false}>
               <span className='mr-1'><AiFillHome /></span> Home
@@ -47,7 +47,6 @@ export default function MainNav() {
           </Link>
         </Navbar.Collapse>
       </Navbar>
-      <div className='mb-12'>.</div>
     </Fragment>
   )
 }
