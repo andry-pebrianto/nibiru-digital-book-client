@@ -1,6 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainNav from "../components/MainNav/MainNav";
 import HomePage from "../pages/HomePage";
+import MainFoot from "../components/Footer/MainFoot";
 
 export default function Router() {
   return (
@@ -14,6 +15,7 @@ export default function Router() {
                 <>
                   <MainNav />
                   <HomePage />
+                  <MainFoot />
                 </>
               }
             />

@@ -3,8 +3,8 @@ import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
-import { FaShoppingCart } from "react-icons/fa";
 import { RiLoginBoxFill } from "react-icons/ri";
+import AppLogo from "../../assets/logo.png"
 
 export default function MainNav() {
   const location = useLocation();
@@ -13,8 +13,8 @@ export default function MainNav() {
     <Fragment>
       <Navbar className='mb-8' fluid rounded border>
         <Navbar.Brand as={Link} to={"/"} className='lg:ml-10'>
-          <img src="/src/assets/logo.png" className="mr-3 h-10 sm:h-9" alt="Nibiru Digital Book" />
-          <span className="self-center whitespace-nowrap text-lg font-semibold dark:text-white">Nibiru Digital Book</span>
+          <img src={AppLogo} className="mr-3 h-10 sm:h-9" alt="Nibiru Digital Book" />
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Nibiru Digital Book</span>
         </Navbar.Brand>
         <div className="flex md:order-2 lg:mr-10">
           <Link to={"/search"}>
@@ -22,15 +22,12 @@ export default function MainNav() {
           </Link>
           <Navbar.Toggle />
         </div>
-        <Navbar.Collapse className='lg:-ml-10'>
+        <Navbar.Collapse className='lg:-ml-7'>
           <Navbar.Link as={Link} to={"/"} className='flex items-center' active={location.pathname === "/" ? true : false}>
             <span className='mr-1'><AiFillHome /></span> Home
           </Navbar.Link>
           <Navbar.Link as={Link} to={"/search"} className='flex items-center' active={location.pathname === "/search" ? true : false}>
             <span className='mr-1'><FaSearch /></span> Search
-          </Navbar.Link>
-          <Navbar.Link as={Link} to={"/cart"} className='flex items-center' active={location.pathname === "/cart" ? true : false}>
-            <span className='mr-1'><FaShoppingCart /></span> Cart
           </Navbar.Link>
           <Navbar.Link as={Link} to={"/login"} className='flex items-center' active={location.pathname === "/login" ? true : false}>
             <span className='mr-1'><RiLoginBoxFill /></span> Login
