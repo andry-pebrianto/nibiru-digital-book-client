@@ -1,9 +1,12 @@
 import { Fragment } from 'react'
+import SearchInput from '../features/searchpage/SearchInput'
+import AllBookList from '../features/searchpage/AllBookList'
 
-export default function HomePage() {
+export default function SearchPage() {
   return (
     <Fragment>
-      <h1>Search Page</h1>
+      <SearchInput />
+      <AllBookList />
     </Fragment>
   )
 }

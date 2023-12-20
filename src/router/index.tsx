@@ -1,7 +1,8 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainNav from "../components/MainNav/MainNav";
-import HomePage from "../pages/HomePage";
 import MainFoot from "../components/Footer/MainFoot";
+import HomePage from "../pages/HomePage";
+import SearchPage from "../pages/SearchPage";
 
 export default function Router() {
   return (
@@ -15,6 +16,18 @@ export default function Router() {
                 <>
                   <MainNav />
                   <HomePage />
+                  <MainFoot />
+                </>
+              }
+            />
+          </Route>
+          <Route path="/search">
+            <Route
+              index
+              element={
+                <>
+                  <MainNav />
+                  <SearchPage />
                   <MainFoot />
                 </>
               }
