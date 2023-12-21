@@ -12,23 +12,23 @@ export default function SearchInput() {
   const [genreFilter, setGenreFilter] = useState<string>("");
 
   const submitSearchFilter = (search: string) => {
-    let url = "/search?";
+    let url = location.pathname;
 
-    if (!searchFilter && genreFilter) url += `genreFilter=${genreFilter}`
+    if (!searchFilter && genreFilter) url += `?genreFilter=${genreFilter}`
     else if (!searchFilter && !genreFilter) url += ""
-    else if (genreFilter) url += `searchFilter=${search}&genreFilter=${genreFilter}`
-    else if (!genreFilter) url += `searchFilter=${search}`
+    else if (genreFilter) url += `?searchFilter=${search}&genreFilter=${genreFilter}`
+    else if (!genreFilter) url += `?searchFilter=${search}`
 
     navigate(url);
   }
 
   const submitGenreFilter = (genre: string) => {
-    let url = "/search?";
+    let url = location.pathname;
 
-    if (!genre && searchFilter) url += `searchFilter=${searchFilter}`
+    if (!genre && searchFilter) url += `?searchFilter=${searchFilter}`
     else if (!searchFilter && !genre) url += ""
-    else if (searchFilter) url += `searchFilter=${searchFilter}&genreFilter=${genre}`
-    else if (!searchFilter) url += `genreFilter=${genre}`
+    else if (searchFilter) url += `?searchFilter=${searchFilter}&genreFilter=${genre}`
+    else if (!searchFilter) url += `?genreFilter=${genre}`
 
     navigate(url);
   }
@@ -65,6 +65,7 @@ export default function SearchInput() {
           size='large'
           className='mx-2'
         />
+
       </div>
     </Fragment>
   )

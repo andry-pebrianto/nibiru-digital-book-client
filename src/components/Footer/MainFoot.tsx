@@ -25,6 +25,13 @@ export default function MainFoot() {
             </div>
             <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
               <div>
+                <FooterTitle title="Legal" />
+                <FooterLinkGroup col>
+                  <FooterLink href="#">Privacy Policy</FooterLink>
+                  <FooterLink href="#">Terms &amp; Conditions</FooterLink>
+                </FooterLinkGroup>
+              </div>
+              <div>
                 <FooterTitle title="about" />
                 <FooterLinkGroup col>
                   <FooterLink href="#">Andry Pebrianto</FooterLink>
@@ -36,13 +43,6 @@ export default function MainFoot() {
                 <FooterLinkGroup col>
                   <FooterLink href="#">Github</FooterLink>
                   <FooterLink href="#">Discord</FooterLink>
-                </FooterLinkGroup>
-              </div>
-              <div>
-                <FooterTitle title="Legal Information" />
-                <FooterLinkGroup col>
-                  <FooterLink href="#">Privacy Policy</FooterLink>
-                  <FooterLink href="#">Terms &amp; Conditions</FooterLink>
                 </FooterLinkGroup>
               </div>
             </div>
