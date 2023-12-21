@@ -2,7 +2,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainNav from "../components/MainNav/MainNav";
 import MainFoot from "../components/Footer/MainFoot";
 import HomePage from "../pages/HomePage";
-import SearchPage from "../pages/SearchPage";
+import SearchPage from "../pages/customer/SearchPage";
+import LoginPage from "../pages/admin/LoginPage";
 
 export default function Router() {
   return (
@@ -29,6 +30,16 @@ export default function Router() {
                   <MainNav />
                   <SearchPage />
                   <MainFoot />
+                </>
+              }
+            />
+          </Route>
+          <Route path="/admin/login">
+            <Route
+              index
+              element={
+                <>
+                  <LoginPage />
                 </>
               }
             />

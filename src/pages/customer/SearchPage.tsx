@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
-import SearchInput from '../features/searchpage/SearchInput'
-import AllBookList from '../features/searchpage/AllBookList'
+import SearchInput from '../../features/searchpage/SearchInput'
+import AllBookList from '../../features/searchpage/AllBookList'
 
 export default function SearchPage() {
   return (
