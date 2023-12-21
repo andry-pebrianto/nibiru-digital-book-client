@@ -49,7 +49,7 @@ export default function SearchInput() {
           onSearch={() => submitSearchFilter(searchFilter)}
           onChange={(e) => setSearchFilter(e.target.value)}
           value={searchFilter}
-          className="max-w-xl mx-2 mb-4"
+          className="max-w-80 sm:max-w-md md:max-w-lg mx-2 mb-4"
         />
 
         <Select

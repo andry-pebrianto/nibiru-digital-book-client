@@ -26,7 +26,7 @@ export default function AllBookList() {
   return (
     <Fragment>
       <div className="max-w-7xl mx-3 sm:mx-5 xl:mx-auto mb-16">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 mb-8">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 mb-8">
           <Card
             className='w-50 border-2'
             hoverable

@@ -3,8 +3,8 @@ import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
-import { RiLoginBoxFill } from "react-icons/ri";
 import AppLogo from "../../assets/logo.png"
+import GoogleLoginNav from './GoogleLoginNav';
 
 export default function MainNav() {
   const location = useLocation();
@@ -29,9 +29,7 @@ export default function MainNav() {
           <Navbar.Link as={Link} to={"/search"} className='flex items-center' active={location.pathname === "/search" ? true : false}>
             <span className='mr-1'><FaSearch /></span> Search
           </Navbar.Link>
-          <Navbar.Link as={Link} to={"/login"} className='flex items-center' active={location.pathname === "/login" ? true : false}>
-            <span className='mr-1'><RiLoginBoxFill /></span> Login
-          </Navbar.Link>
+          <GoogleLoginNav />
         </Navbar.Collapse>
       </Navbar>
     </Fragment>

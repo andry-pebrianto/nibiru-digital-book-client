@@ -6,7 +6,7 @@ export default function NewBookList() {
     <Fragment>
       <div className="max-w-7xl mx-3 sm:mx-5 xl:mx-auto mb-16">
         <h1 className='text-2xl mb-4 font-bold'>New Added</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
           <Card
             className='w-50 border-2'
             hoverable
