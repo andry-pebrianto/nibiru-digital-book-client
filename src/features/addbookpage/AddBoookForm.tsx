@@ -51,7 +51,7 @@ export default function AddBoookForm() {
     watch,
     trigger,
   } = form;
-  const { errors, isDirty, isValid } = formState;
+  const { errors, isDirty } = formState;
 
   const onSubmit = (data: FormValues) => {
     console.log("Form Submitted", data);
@@ -132,6 +132,7 @@ export default function AddBoookForm() {
               <Label htmlFor="synopsis" value="Synopsis *" />
             </div>
             <ReactQuill
+              id="synopsis"
               theme="snow"
               value={watch("synopsis")}
               onChange={(value) => {
@@ -144,7 +145,7 @@ export default function AddBoookForm() {
               <p className="text-red-400 text-sm">{errors.synopsis?.message}</p>
             )}
           </div>
-          <Button disabled={!isDirty || !isValid} className="mt-2 max-w-28" type="submit">
+          <Button disabled={!isDirty} className="mt-2 max-w-28" type="submit">
             Submit
           </Button>
         </form>
