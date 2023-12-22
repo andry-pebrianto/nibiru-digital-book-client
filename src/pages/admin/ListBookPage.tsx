@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
-import ListBook from '../../features/bookpage/ListBook'
+import ListBook from '../../features/listbookpage/ListBook'
 import SearchInput from '../../features/searchpage/SearchInput'
 
-export default function BookPage() {
+export default function ListBookPage() {
   return (
     <Fragment>
       <SearchInput />

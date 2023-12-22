@@ -5,7 +5,9 @@ import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/customer/SearchPage";
 import DetailBookPage from "../pages/customer/DetailBookPage";
 import LoginPage from "../pages/admin/LoginPage";
-import BookPage from "../pages/admin/BookPage";
+import ListBookPage from "../pages/admin/ListBookPage";
+import EditBookPage from "../pages/admin/EditBookPage";
+import AddBookPage from "../pages/admin/AddBookPage";
 
 export default function Router() {
   return (
@@ -63,8 +65,32 @@ export default function Router() {
               index
               element={
                 <>
-                <MainNav />
-                  <BookPage />
+                  <MainNav />
+                  <ListBookPage />
+                  <MainFoot />
+                </>
+              }
+            />
+          </Route>
+          <Route path="/admin/book/add">
+            <Route
+              index
+              element={
+                <>
+                  <MainNav />
+                  <AddBookPage />
+                  <MainFoot />
+                </>
+              }
+            />
+          </Route>
+          <Route path="/admin/book/:id/edit">
+            <Route
+              index
+              element={
+                <>
+                  <MainNav />
+                  <EditBookPage />
                   <MainFoot />
                 </>
               }

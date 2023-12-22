@@ -31,6 +31,7 @@ export default function ListBook() {
   return (
     <Fragment>
       <div className='mb-12 mx-3'>
+        <Button className='mx-auto mb-4' color='success'>Add Book</Button>
         <Row justify={"center"} className='gap-6 mb-8'>
           <Col xs={24} lg={10}>
             <div className="flex max-w-4xl mx-auto border-2 shadow-md rounded">
