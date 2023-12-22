@@ -11,7 +11,7 @@ export default function NewBookList() {
         <h1 className='text-2xl mb-4 font-bold'>New Added</h1>
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
           <Card
-            className='w-50 border-2 relative'
+            className='w-full border-2 relative'
             cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
           >
             <Link to={"/search?genreFilter=sciencefiction"}>
@@ -23,7 +23,9 @@ export default function NewBookList() {
             <p className='text-sm mb-4 text-gray-500'>Andry Pebrianto</p>
             <p className='text-lg font-semibold text-end mb-3'>Rp 80,000</p>
 
-            <Button color="blue" size={"sm"} className='mb-3'><span className='mr-2'>Go To Detail</span><FaArrowRight /></Button>
+            <Link to={"/book/vryu3g8cho3v87gioinov3g8vi"}>
+              <Button color="blue" size={"sm"} className='mb-3'><span className='mr-2'>Go To Detail</span><FaArrowRight /></Button>
+            </Link>
             <hr />
             <p className='mt-3 text-[13px]'>Added at 11-11-2020</p>
           </Card>
