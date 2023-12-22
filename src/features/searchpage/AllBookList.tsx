@@ -42,7 +42,8 @@ export default function AllBookList() {
             <p className='text-lg font-semibold text-end mb-3'>Rp 80,000</p>
             <hr />
             <p className='mt-3 text-[13px]'>Added at 11-11-2020</p>
-          </Card>        </div>
+          </Card>
+        </div>
         <div className='text-center'>
           <Pagination showQuickJumper={100 >= 100} showSizeChanger={false} defaultCurrent={1} current={page} defaultPageSize={18} pageSize={18} total={180} onChange={changePagePagination} />
         </div>

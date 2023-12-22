@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/customer/SearchPage";
 import DetailBookPage from "../pages/customer/DetailBookPage";
 import LoginPage from "../pages/admin/LoginPage";
+import BookPage from "../pages/admin/BookPage";
 
 export default function Router() {
   return (
@@ -53,6 +54,18 @@ export default function Router() {
               element={
                 <>
                   <LoginPage />
+                </>
+              }
+            />
+          </Route>
+          <Route path="/admin/book">
+            <Route
+              index
+              element={
+                <>
+                <MainNav />
+                  <BookPage />
+                  <MainFoot />
                 </>
               }
             />
