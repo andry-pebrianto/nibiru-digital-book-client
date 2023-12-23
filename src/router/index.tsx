@@ -1,6 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import MainNav from "../components/MainNav/MainNav";
-import MainFoot from "../components/Footer/MainFoot";
+import Main from "../layouts/Main";
 import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/customer/SearchPage";
 import DetailBookPage from "../pages/customer/DetailBookPage";
@@ -19,9 +18,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <HomePage />
-                  <MainFoot />
+                  <Main>
+                    <HomePage />
+                  </Main>
                 </>
               }
             />
@@ -31,9 +30,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <SearchPage />
-                  <MainFoot />
+                  <Main>
+                    <SearchPage />
+                  </Main>
                 </>
               }
             />
@@ -43,9 +42,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <DetailBookPage />
-                  <MainFoot />
+                  <Main>
+                    <DetailBookPage />
+                  </Main>
                 </>
               }
             />
@@ -65,9 +64,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <ListBookPage />
-                  <MainFoot />
+                  <Main>
+                    <ListBookPage />
+                  </Main>
                 </>
               }
             />
@@ -77,9 +76,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <AddBookPage />
-                  <MainFoot />
+                  <Main>
+                    <AddBookPage />
+                  </Main>
                 </>
               }
             />
@@ -89,9 +88,9 @@ export default function Router() {
               index
               element={
                 <>
-                  <MainNav />
-                  <EditBookPage />
-                  <MainFoot />
+                  <Main>
+                    <EditBookPage />
+                  </Main>
                 </>
               }
             />
