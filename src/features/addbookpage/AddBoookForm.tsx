@@ -2,9 +2,9 @@ import { Fragment } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ReactQuill from "react-quill";
-import * as yup from "yup";
 import "react-quill/dist/quill.snow.css";
 
 type FormValues = {
