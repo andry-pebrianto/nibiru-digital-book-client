@@ -51,14 +51,26 @@ export default function MainNav() {
         </Navbar.Brand>
         <div className="flex md:order-2 lg:mr-10">
           {localStorage.getItem("refreshToken") ? (
-            <Link to={"/search"}>
-              <Button
-                className="mr-2 hidden sm:block"
-                gradientDuoTone="greenToBlue"
-              >
-                Discover New Book
-              </Button>
-            </Link>
+            <>
+              {decryptData(localStorage.getItem("accountType") || "") ===
+              "customer" ? (
+                <Link to={"/search"}>
+                  <Button
+                    className="mr-2 hidden sm:block"
+                    gradientDuoTone="greenToBlue"
+                  >
+                    Discover New Book
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  className="mr-2 hidden sm:block"
+                  gradientDuoTone="greenToBlue"
+                >
+                  Good Work Admin
+                </Button>
+              )}
+            </>
           ) : (
             <Button
               className="mr-2 hidden sm:block"

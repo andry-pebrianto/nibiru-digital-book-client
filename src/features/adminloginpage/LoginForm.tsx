@@ -22,10 +22,6 @@ const schema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-      "The password must consist of a minimum of 8 characters, at least one letter and one number"
-    ),
 });
 
 export default function LoginForm() {
@@ -54,7 +50,7 @@ export default function LoginForm() {
       // save refresh token & access token
       localStorage.setItem("refreshToken", encryptData(response.data.refreshToken));
       localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("accountType", encryptData("customer"));
+      localStorage.setItem("accountType", encryptData("admin"));
 
       showToastSuccess(response.data.message);
       reCheckAccessToken();
@@ -108,6 +104,7 @@ export default function LoginForm() {
               <TextInput
                 id="adminPassword"
                 type="password"
+                placeholder="as******"
                 {...register("password")}
                 helperText={
                   <>

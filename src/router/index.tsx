@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Fragment, ReactNode } from "react";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { Spin } from "antd";
 import Main from "../layouts/Main";
 import HomePage from "../pages/HomePage";
@@ -10,9 +10,48 @@ import ListBookPage from "../pages/admin/ListBookPage";
 import EditBookPage from "../pages/admin/EditBookPage";
 import AddBookPage from "../pages/admin/AddBookPage";
 import { useCheckAccessToken } from "../hooks/auth/useCheck";
+import { decryptData } from "../utils/encrypt";
 
 export default function Router() {
   const { isFetchedAfterMount } = useCheckAccessToken();
+
+  function OnlyLoggedAndCustomer({ children }: { children: ReactNode }) {
+    if (!localStorage.getItem("refreshToken")) {
+      return <Navigate to={"/"} />;
+    }
+    if (decryptData(localStorage.getItem("accountType") || "") === "admin") {
+      return <Navigate to={"/admin/book"} />;
+    }
+
+    return children;
+  }
+
+  function OnlyLoggedAndAdmin({ children }: { children: ReactNode }) {
+    if (!localStorage.getItem("refreshToken")) {
+      return <Navigate to={"/"} />;
+    }
+    if (decryptData(localStorage.getItem("accountType") || "") === "customer") {
+      return <Navigate to={"/"} />;
+    }
+
+    return children;
+  }
+
+  function OnlyGuestAndCustomer({ children }: { children: ReactNode }) {
+    if (decryptData(localStorage.getItem("accountType") || "") === "admin") {
+      return <Navigate to={"/admin/book"} />;
+    }
+
+    return children;
+  }
+
+  function OnlyGuest({ children }: { children: ReactNode }) {
+    if (localStorage.getItem("refreshToken")) {
+      return <Navigate to={"/"} />;
+    }
+
+    return children;
+  }
 
   return (
     <Fragment>
@@ -29,11 +68,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyGuestAndCustomer>
                     <Main>
                       <HomePage />
                     </Main>
-                  </>
+                  </OnlyGuestAndCustomer>
                 }
               />
             </Route>
@@ -41,11 +80,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyLoggedAndCustomer>
                     <Main>
                       <SearchPage />
                     </Main>
-                  </>
+                  </OnlyLoggedAndCustomer>
                 }
               />
             </Route>
@@ -53,11 +92,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyLoggedAndCustomer>
                     <Main>
                       <DetailBookPage />
                     </Main>
-                  </>
+                  </OnlyLoggedAndCustomer>
                 }
               />
             </Route>
@@ -65,9 +104,9 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyGuest>
                     <LoginPage />
-                  </>
+                  </OnlyGuest>
                 }
               />
             </Route>
@@ -75,11 +114,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyLoggedAndAdmin>
                     <Main>
                       <ListBookPage />
                     </Main>
-                  </>
+                  </OnlyLoggedAndAdmin>
                 }
               />
             </Route>
@@ -87,11 +126,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyLoggedAndAdmin>
                     <Main>
                       <AddBookPage />
                     </Main>
-                  </>
+                  </OnlyLoggedAndAdmin>
                 }
               />
             </Route>
@@ -99,11 +138,11 @@ export default function Router() {
               <Route
                 index
                 element={
-                  <>
+                  <OnlyLoggedAndAdmin>
                     <Main>
                       <EditBookPage />
                     </Main>
-                  </>
+                  </OnlyLoggedAndAdmin>
                 }
               />
             </Route>
