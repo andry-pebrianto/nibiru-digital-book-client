@@ -11,6 +11,7 @@ import GoogleLoginNav from "./GoogleLoginNav";
 import { decryptData } from "../../utils/encrypt";
 import { useCheckAccessToken } from "../../hooks/auth/useCheck";
 import { showToastError } from "../../utils/toast";
+import { API } from "../../utils/api";
 
 export default function MainNav() {
   const location = useLocation();
@@ -31,6 +32,10 @@ export default function MainNav() {
       if (result.isConfirmed) {
         localStorage.clear();
         reCheckAccessToken();
+        API.delete(
+          "/api/v1/customer/auth/logout/" +
+            decryptData(localStorage.getItem("refreshToken") || "")
+        );
         navigate("/");
       }
     });

@@ -11,20 +11,13 @@ import Router from "./router";
 import { showToastError } from "./utils/toast";
 import { getError } from "./utils/error";
 import { AxiosError } from "axios";
-import { getNewAccessToken } from "./utils/auth";
 import "react-toastify/dist/ReactToastify.css";
 
 const queryCLient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       if (error instanceof AxiosError) {
-        if (error.response?.data?.code === 401) {
-          if (localStorage.getItem("refreshToken")) {
-            getNewAccessToken();
-          }
-        }
-      } else {
-        showToastError(getError(error));
+        if (error.response?.data?.code !== 401) showToastError(getError(error));
       }
     },
   }),
