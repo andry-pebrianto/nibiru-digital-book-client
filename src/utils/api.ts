@@ -41,12 +41,16 @@ API.interceptors.response.use(
             return axios(originalRequest);
           } catch (error) {
             // Handle refresh token error or redirect to login
-            if (localStorage.getItem("refreshToken")) {
-              showToastError("Session Has Expired, Please Re-Login");
-              localStorage.clear();
-              setTimeout(() => {
-                window.location.reload();
-              }, 2500);
+            if (error instanceof AxiosError){
+              if (error.response?.status === 401){
+                if (localStorage.getItem("refreshToken")) {
+                  showToastError("Session Has Expired, Please Re-Login");
+                  localStorage.clear();
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 2500);
+                }
+              }
             }
           }
         }

@@ -4,25 +4,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Image, Row, Select, Spin } from "antd";
 import Dropzone from "react-dropzone";
 import ReactQuill from "react-quill";
+import { FaTrashAlt } from "react-icons/fa";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import "react-quill/dist/quill.snow.css";
 import { useFetchListGenre } from "../../hooks/auth/useListGenre";
-import { Genre } from "../../types";
+import { BookPost, Genre } from "../../types";
 import { usePostBook } from "./hooks/usePostBook";
 import { useUploadReactDropzone } from "../../hooks/upload/useUploadReactDropzone";
 import Validate from "../../components/Message/Validate";
-
-type FormValues = {
-  title: string;
-  author: string;
-  price: string;
-  synopsis: string;
-  genre: string;
-  photos?: string[];
-};
+import { showToastSuccess } from "../../utils/toast";
 
 const schema = yup.object({
   title: yup.string().max(100, "Title too long").required("Title is required"),
@@ -48,10 +42,13 @@ const schema = yup.object({
 export default function AddBoookForm() {
   const navigate = useNavigate();
   const { isLoading: isLoadingGenre, data: genres } = useFetchListGenre();
-  const { mutate, isPending } = usePostBook(() => navigate("/admin/book"));
-  const { images, isLoading: isLoadingUpload, handleDrop } = useUploadReactDropzone();
+  const { mutate, isPending } = usePostBook(() => {
+    navigate("/admin/book");
+    showToastSuccess("Add Book Success");
+  });
+  const { images, isLoading: isLoadingUpload, handleDrop, removeOne } = useUploadReactDropzone();
 
-  const form = useForm<FormValues>({
+  const form = useForm<BookPost>({
     defaultValues: {
       title: "",
       author: "",
@@ -71,17 +68,24 @@ export default function AddBoookForm() {
 
   useEffect(() => {
     setValue("photos", images, { shouldDirty: true });
+    if (isDirty) {
+      trigger("photos");
+    }
   }, [images]);
 
-  const onSubmit = (data: FormValues) => {
-    // mutate(data);
-    console.log(data);
+  const onSubmit = (data: BookPost) => {
+    mutate({ data });
   };
 
   return (
     <Fragment>
       <div className="max-w-xl mx-auto p-4">
         <h1 className="text-3xl mb-4 font-bold">Add Book</h1>
+        <Link to={"/"} className="text-sky-500">
+          <span className="flex items-center mb-2">
+            <IoMdArrowRoundBack /> Back
+          </span>
+        </Link>
         <hr />
         <form
           className="flex w-full flex-col gap-2 mb-12 mt-4"
@@ -192,6 +196,13 @@ export default function AddBoookForm() {
                         className="object-cover"
                         src={photo}
                       />
+                      <p
+                        className="text-red-600 text-sm flex justify-center cursor-pointer"
+                        onClick={() => removeOne(index)}
+                      >
+                        <FaTrashAlt />{" "}
+                        <span className="-mt-[2px] ml-1">DELETE</span>
+                      </p>
                     </Col>
                   ))}
                 </Row>
@@ -215,7 +226,11 @@ export default function AddBoookForm() {
             />
             <Validate error={errors.synopsis?.message} />
           </div>
-          <Button disabled={!isDirty} className="mt-2 max-w-28" type="submit">
+          <Button
+            disabled={!isDirty || isLoadingUpload}
+            className="mt-2 max-w-28"
+            type="submit"
+          >
             Submit
           </Button>
         </form>

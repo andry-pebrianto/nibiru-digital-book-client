@@ -2,13 +2,14 @@ import { Fragment, useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { MdOutlineBlock } from "react-icons/md";
-import { Col, Pagination, Row } from "antd";
+import { Col, Image, Pagination, Row } from "antd";
 import {
   Link,
   useLocation,
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
+import ReactHtmlParser from "html-react-parser";
 import { useFetchListBookAdmin } from "./hooks/useListBookAdmin";
 import { BookAdmin } from "../../types";
 
@@ -123,10 +124,11 @@ export default function ListBook() {
                             </Button>
                           </div>
                         </div>
-                        <img
-                          className="h-28 sm:h-[160px] rounded"
+                        <Image
+                          width={"160px"}
+                          height={"180px"}
+                          className="rounded object-cover"
                           src={book.photos[0]}
-                          alt="Book Picture"
                         />
                       </div>
                     </Col>
@@ -157,7 +159,7 @@ export default function ListBook() {
         <Modal.Body>
           <div className="space-y-6">
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              {synopsisSelected}
+              {ReactHtmlParser(synopsisSelected)}
             </p>
           </div>
         </Modal.Body>

@@ -22,7 +22,7 @@ export type BookPost = {
   title: string;
   author: string;
   synopsis: string;
-  photos: string[];
-  price: number;
+  photos?: string[];
+  price: string;
   genre: string;
 };
