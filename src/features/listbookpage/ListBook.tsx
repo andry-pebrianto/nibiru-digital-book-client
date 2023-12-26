@@ -47,16 +47,19 @@ export default function ListBook() {
   useEffect(() => {
     setPage(parseInt(queryParams.get("page") || "0"));
     refetch();
+    window.scrollTo(0, 0);
   }, [queryParams]);
 
   return (
     <Fragment>
       <div className="mb-12 mx-3">
-        <Link to={"/admin/book/add"}>
-          <Button className="mx-auto mb-4" color="success">
-            Add Book
-          </Button>
-        </Link>
+        <div className="w-28 mx-auto mb-4">
+          <Link to={"/admin/book/add"}>
+            <Button className="mx-auto" color="success">
+              Add Book
+            </Button>
+          </Link>
+        </div>
         <Row justify={"center"} className="gap-6 mb-8">
           {isLoading ? (
             <div role="status">
@@ -80,46 +83,56 @@ export default function ListBook() {
             </div>
           ) : (
             <>
-              {books?.data.map((book: BookAdmin) => (
-                <Col key={book.id} xs={24} lg={10}>
-                  <div className="flex max-w-4xl mx-auto border-2 shadow-md rounded">
-                    <div className="flex-1 p-5">
-                      <h1 className="text-lg">
-                        Title: <span className="font-bold">{book.title}</span>
-                      </h1>
-                      <p className="mb-3 text-sm">
-                        Author: <span>{book.author}</span>
-                      </p>
-                      <Button
-                        size={"xs"}
-                        className="py-2 mb-2"
-                        onClick={() => {
-                          setSynopsisSelected(book.synopsis);
-                          setOpenModal(true);
-                        }}
-                      >
-                        See Full Synopsis
-                      </Button>
-                      <div className="flex gap-1">
-                        <Button color="blue" size={"xs"}>
-                          <FaEdit />
-                        </Button>
-                        <Button color="failure" size={"xs"}>
-                          <FaTrash />
-                        </Button>
-                        <Button color="dark" size={"xs"}>
-                          <MdOutlineBlock />
-                        </Button>
+              {isError ? (
+                <div>{error.message}</div>
+              ) : (
+                <>
+                  {books?.data.map((book: BookAdmin) => (
+                    <Col key={book.id} xs={24} lg={10}>
+                      <div className="flex max-w-4xl mx-auto border-2 shadow-md rounded">
+                        <div className="flex-1 p-5">
+                          <h1 className="text-lg">
+                            Title:{" "}
+                            <span className="font-bold">{book.title}</span>
+                          </h1>
+                          <p className="text-sm">
+                            Author: <span>{book.author}</span>
+                          </p>
+                          <p className="mb-2 text-sm">
+                            Genre: <span>{book.genre.title}</span>
+                          </p>
+                          <Button
+                            size={"xs"}
+                            className="mb-2"
+                            onClick={() => {
+                              setSynopsisSelected(book.synopsis);
+                              setOpenModal(true);
+                            }}
+                          >
+                            See Full Synopsis
+                          </Button>
+                          <div className="flex gap-1">
+                            <Button color="blue" size={"xs"}>
+                              <FaEdit />
+                            </Button>
+                            <Button color="failure" size={"xs"}>
+                              <FaTrash />
+                            </Button>
+                            <Button color="dark" size={"xs"}>
+                              <MdOutlineBlock />
+                            </Button>
+                          </div>
+                        </div>
+                        <img
+                          className="h-28 sm:h-[160px] rounded"
+                          src={book.photos[0]}
+                          alt="Book Picture"
+                        />
                       </div>
-                    </div>
-                    <img
-                      className="h-48 sm:h-52 rounded"
-                      src={book.photos[0]}
-                      alt="Book Picture"
-                    />
-                  </div>
-                </Col>
-              ))}
+                    </Col>
+                  ))}
+                </>
+              )}
             </>
           )}
         </Row>
@@ -130,9 +143,9 @@ export default function ListBook() {
               showSizeChanger={false}
               defaultCurrent={1}
               current={page}
-              defaultPageSize={18}
-              pageSize={18}
-              total={180}
+              defaultPageSize={10}
+              pageSize={10}
+              total={books?.total}
               onChange={changePagePagination}
             />
           </div>

@@ -1,3 +1,10 @@
+export type Genre = {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type BookAdmin = {
   id: string;
   title: string;
@@ -8,10 +15,14 @@ export type BookAdmin = {
   active: boolean;
   created_at: string;
   updated_at: string;
-  genre: {
-    id: string;
-    title: string;
-    created_at: string;
-    updated_at: string;
-  };
+  genre: Genre;
+};
+
+export type BookPost = {
+  title: string;
+  author: string;
+  synopsis: string;
+  photos: string[];
+  price: number;
+  genre: string;
 };

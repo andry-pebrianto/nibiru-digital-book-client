@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../utils/api";
 
-// fetch users search
 const fetchListBookAdmin = async (
   search: string,
   genre: string,
@@ -26,4 +25,3 @@ export const useFetchListBookAdmin = (
     refetchOnWindowFocus: false,
   });
 };
-// fetch users search
