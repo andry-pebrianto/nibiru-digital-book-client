@@ -11,6 +11,7 @@ import AddBookPage from "../pages/admin/AddBookPage";
 import EditBookPage from "../pages/admin/EditBookPage";
 import ListGenrePage from "../pages/admin/ListGenrePage";
 import AddGenrePage from "../pages/admin/AddGenrePage";
+import EditGenrePage from "../pages/admin/EditGenrePage";
 import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
 
@@ -167,6 +168,18 @@ export default function Router() {
                   <OnlyLoggedAndAdmin>
                     <Main>
                       <AddGenrePage />
+                    </Main>
+                  </OnlyLoggedAndAdmin>
+                }
+              />
+            </Route>
+            <Route path="/admin/genre/:id/edit">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndAdmin>
+                    <Main>
+                      <EditGenrePage />
                     </Main>
                   </OnlyLoggedAndAdmin>
                 }

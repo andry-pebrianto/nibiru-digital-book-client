@@ -68,11 +68,16 @@ const columns: ColumnsType<GenreWithKey> = [
 ];
 
 export default function ListGenre() {
-  const { isLoading: isLoadingGenre, data: genres } = useFetchListGenre();
+  const {
+    isLoading: isLoadingGenre,
+    isError,
+    error,
+    data: genres,
+  } = useFetchListGenre();
 
   return (
     <Fragment>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto mb-12">
         <h1 className="text-3xl text-center mb-4">List Genre</h1>
         <div className="w-32 mx-auto mb-6">
           <Link to={"/admin/genre/add"}>
@@ -82,7 +87,7 @@ export default function ListGenre() {
           </Link>
         </div>
         {isLoadingGenre ? (
-          <div role="status" className="mb-8 flex justify-center">
+          <div role="status" className="flex justify-center">
             <svg
               aria-hidden="true"
               className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -103,16 +108,20 @@ export default function ListGenre() {
           </div>
         ) : (
           <>
-            <Table
-              className="mb-10"
-              columns={columns}
-              dataSource={genres.data.map((genre: Genre, index: number) => ({
-                ...genre,
-                key: index,
-              }))}
-              scroll={{ scrollToFirstRowOnChange: true }}
-              pagination={false}
-            />
+            {isError ? (
+              <div className="text-center my-5">{error.message}</div>
+            ) : (
+              <Table
+                className="mb-10"
+                columns={columns}
+                dataSource={genres?.data.map((genre: Genre, index: number) => ({
+                  ...genre,
+                  key: index,
+                }))}
+                scroll={{ scrollToFirstRowOnChange: true }}
+                pagination={false}
+              />
+            )}
           </>
         )}
       </div>
