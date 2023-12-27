@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { FaLockOpen, FaLock } from "react-icons/fa";
 import { Col, Image, Pagination, Row } from "antd";
 import {
@@ -12,6 +12,9 @@ import {
 import ReactHtmlParser from "html-react-parser";
 import { useFetchListBookAdmin } from "./hooks/useListBookAdmin";
 import { BookAdmin } from "../../types";
+import { useDeleteBook } from "./hooks/useDeleteBook";
+import { showToastSuccess } from "../../utils/toast";
+import Swal from "sweetalert2";
 
 export default function ListBook() {
   const [openModal, setOpenModal] = useState(false);
@@ -50,6 +53,27 @@ export default function ListBook() {
     refetch();
     window.scrollTo(0, 0);
   }, [queryParams]);
+
+  const { mutate } = useDeleteBook(() => {
+    navigate("/admin/book");
+    showToastSuccess("Delete Book Success");
+  });
+
+  const deleteBook = (id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Selected Genre Will Permanently Deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete It!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutate({ id });
+      }
+    });
+  };
 
   return (
     <Fragment>
@@ -116,15 +140,20 @@ export default function ListBook() {
                             <Button color="blue" size={"xs"}>
                               <FaEdit />
                             </Button>
-                            <Button color="failure" size={"xs"}>
-                              <FaTrash />
-                            </Button>
                             {book.active ? (
-                              <Button color="success" size={"xs"}>
+                              <Button
+                                onClick={() => deleteBook(book.id)}
+                                color="success"
+                                size={"xs"}
+                              >
                                 <FaLockOpen />
                               </Button>
                             ) : (
-                              <Button color="dark" size={"xs"}>
+                              <Button
+                                onClick={() => deleteBook(book.id)}
+                                color="dark"
+                                size={"xs"}
+                              >
                                 <FaLock />
                               </Button>
                             )}
