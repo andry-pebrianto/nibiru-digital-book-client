@@ -4,9 +4,12 @@ import { Table } from "antd";
 import moment from "moment";
 import { ColumnsType } from "antd/es/table";
 import { Button } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Genre } from "../../types";
+import { useDeleteGenre } from "./hooks/useDeleteGenre";
+import { showToastSuccess } from "../../utils/toast";
+import Swal from "sweetalert2";
 
 type GenreWithKey = Genre & {
   key: number;
@@ -47,7 +50,23 @@ const columns: ColumnsType<GenreWithKey> = [
     align: "center",
     width: "200px",
   },
-  {
+];
+
+export default function ListGenre() {
+  const navigate = useNavigate();
+
+  const {
+    isLoading: isLoadingGenre,
+    isError,
+    error,
+    data: genres,
+  } = useFetchListGenre();
+  const { mutate } = useDeleteGenre(() => {
+    navigate("/admin/genre");
+    showToastSuccess("Delete Genre Success");
+  });
+
+  columns[4] = {
     title: "Action",
     dataIndex: "",
     render: (_, item) => (
@@ -57,23 +76,32 @@ const columns: ColumnsType<GenreWithKey> = [
             <FaEdit />
           </Button>
         </Link>
-        <Button color="failure" size={"xs"}>
+        <Button
+          onClick={() => {
+            Swal.fire({
+              title: "Are you sure?",
+              text: "Selected Genre Will Permanently Deleted!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, Delete It!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                mutate({ id: item.id });
+              }
+            });
+          }}
+          color="failure"
+          size={"xs"}
+        >
           <FaTrash />
         </Button>
       </div>
     ),
     align: "center",
     width: "100px",
-  },
-];
-
-export default function ListGenre() {
-  const {
-    isLoading: isLoadingGenre,
-    isError,
-    error,
-    data: genres,
-  } = useFetchListGenre();
+  };
 
   return (
     <Fragment>
@@ -118,7 +146,7 @@ export default function ListGenre() {
                   ...genre,
                   key: index,
                 }))}
-                scroll={{ scrollToFirstRowOnChange: true }}
+                scroll={{ x: true }}
                 pagination={false}
               />
             )}
