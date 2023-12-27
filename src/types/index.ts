@@ -26,3 +26,7 @@ export type BookPost = {
   price: string;
   genre: string;
 };
+
+export type GenrePost = {
+  title: string;
+};

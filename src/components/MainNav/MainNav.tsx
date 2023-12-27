@@ -6,10 +6,11 @@ import { FaSearch } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { MdCategory } from "react-icons/md";
 import AppLogo from "../../assets/logo.png";
 import GoogleLoginNav from "./GoogleLoginNav";
 import { decryptData } from "../../utils/encrypt";
-import { useCheckAccessToken } from "../../hooks/auth/useCheck";
+import { useCheckAccessToken } from "../../hooks/useCheck";
 import { showToastError } from "../../utils/toast";
 import { API } from "../../utils/api";
 
@@ -123,17 +124,30 @@ export default function MainNav() {
           {localStorage.getItem("refreshToken") &&
             decryptData(localStorage.getItem("accountType") || "") ===
               "admin" && (
-              <Navbar.Link
-                as={Link}
-                to={"/admin/book"}
-                className="flex items-center"
-                active={location.pathname === "/admin/book" ? true : false}
-              >
-                <span className="mr-1">
-                  <FaBook />
-                </span>{" "}
-                List Book
-              </Navbar.Link>
+              <>
+                <Navbar.Link
+                  as={Link}
+                  to={"/admin/book"}
+                  className="flex items-center"
+                  active={location.pathname === "/admin/book" ? true : false}
+                >
+                  <span className="mr-1">
+                    <FaBook />
+                  </span>{" "}
+                  List Book
+                </Navbar.Link>
+                <Navbar.Link
+                  as={Link}
+                  to={"/admin/genre"}
+                  className="flex items-center"
+                  active={location.pathname === "/admin/genre" ? true : false}
+                >
+                  <span className="mr-1">
+                    <MdCategory />
+                  </span>{" "}
+                  List Genre
+                </Navbar.Link>
+              </>
             )}
           {/* logout */}
           {localStorage.getItem("refreshToken") && (

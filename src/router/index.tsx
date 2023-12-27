@@ -7,9 +7,11 @@ import SearchPage from "../pages/customer/SearchPage";
 import DetailBookPage from "../pages/customer/DetailBookPage";
 import LoginPage from "../pages/admin/LoginPage";
 import ListBookPage from "../pages/admin/ListBookPage";
-import EditBookPage from "../pages/admin/EditBookPage";
 import AddBookPage from "../pages/admin/AddBookPage";
-import { useCheckAccessToken } from "../hooks/auth/useCheck";
+import EditBookPage from "../pages/admin/EditBookPage";
+import ListGenrePage from "../pages/admin/ListGenrePage";
+import AddGenrePage from "../pages/admin/AddGenrePage";
+import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
 
 export default function Router() {
@@ -141,6 +143,30 @@ export default function Router() {
                   <OnlyLoggedAndAdmin>
                     <Main>
                       <EditBookPage />
+                    </Main>
+                  </OnlyLoggedAndAdmin>
+                }
+              />
+            </Route>
+            <Route path="/admin/genre">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndAdmin>
+                    <Main>
+                      <ListGenrePage />
+                    </Main>
+                  </OnlyLoggedAndAdmin>
+                }
+              />
+            </Route>
+            <Route path="/admin/genre/add">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndAdmin>
+                    <Main>
+                      <AddGenrePage />
                     </Main>
                   </OnlyLoggedAndAdmin>
                 }

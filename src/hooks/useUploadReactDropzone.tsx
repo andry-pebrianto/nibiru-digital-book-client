@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FileRejection } from "react-dropzone";
-import { API } from "../../utils/api";
-import { showToastError } from "../../utils/toast";
-import { getError } from "../../utils/error";
+import { API } from "../utils/api";
+import { showToastError } from "../utils/toast";
+import { getError } from "../utils/error";
 
 export const useUploadReactDropzone = () => {
   const [images, setImages] = useState<string[]>([]);

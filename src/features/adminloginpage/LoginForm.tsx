@@ -9,7 +9,7 @@ import { DevTool } from "@hookform/devtools";
 import { API } from "../../utils/api";
 import { encryptData } from "../../utils/encrypt";
 import { showToastError, showToastSuccess } from "../../utils/toast";
-import { useCheckAccessToken } from "../../hooks/auth/useCheck";
+import { useCheckAccessToken } from "../../hooks/useCheck";
 import { getError } from "../../utils/error";
 
 type FormValues = {

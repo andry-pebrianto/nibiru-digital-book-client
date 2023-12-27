@@ -8,7 +8,7 @@ import { getError } from "../../utils/error";
 import { API } from "../../utils/api";
 import { encryptData } from "../../utils/encrypt";
 import { showToastError, showToastSuccess } from "../../utils/toast";
-import { useCheckAccessToken } from "../../hooks/auth/useCheck";
+import { useCheckAccessToken } from "../../hooks/useCheck";
 
 export default function GoogleLoginNav() {
   const navigate = useNavigate();

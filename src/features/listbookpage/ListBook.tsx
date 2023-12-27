@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import { MdOutlineBlock } from "react-icons/md";
+import { FaLockOpen, FaLock } from "react-icons/fa";
 import { Col, Image, Pagination, Row } from "antd";
 import {
   Link,
@@ -119,9 +119,15 @@ export default function ListBook() {
                             <Button color="failure" size={"xs"}>
                               <FaTrash />
                             </Button>
-                            <Button color="dark" size={"xs"}>
-                              <MdOutlineBlock />
-                            </Button>
+                            {book.active ? (
+                              <Button color="success" size={"xs"}>
+                                <FaLockOpen />
+                              </Button>
+                            ) : (
+                              <Button color="dark" size={"xs"}>
+                                <FaLock />
+                              </Button>
+                            )}
                           </div>
                         </div>
                         <Image
@@ -158,7 +164,7 @@ export default function ListBook() {
         <Modal.Header>Book Synopsis</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            <p className="unreset leading-relaxed text-gray-500 dark:text-gray-400">
               {ReactHtmlParser(synopsisSelected)}
             </p>
           </div>

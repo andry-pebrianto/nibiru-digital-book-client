@@ -11,10 +11,10 @@ import ReactQuill from "react-quill";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import "react-quill/dist/quill.snow.css";
-import { useFetchListGenre } from "../../hooks/auth/useListGenre";
+import { useFetchListGenre } from "../../hooks/useListGenre";
 import { BookPost, Genre } from "../../types";
 import { usePostBook } from "./hooks/usePostBook";
-import { useUploadReactDropzone } from "../../hooks/upload/useUploadReactDropzone";
+import { useUploadReactDropzone } from "../../hooks/useUploadReactDropzone";
 import Validate from "../../components/Message/Validate";
 import { showToastSuccess } from "../../utils/toast";
 
@@ -81,7 +81,7 @@ export default function AddBoookForm() {
     <Fragment>
       <div className="max-w-xl mx-auto p-4">
         <h1 className="text-3xl mb-4 font-bold">Add Book</h1>
-        <Link to={"/"} className="text-sky-500">
+        <Link to={"/admin/book"} className="text-sky-500">
           <span className="flex items-center mb-2">
             <IoMdArrowRoundBack /> Back
           </span>
@@ -227,7 +227,7 @@ export default function AddBoookForm() {
             <Validate error={errors.synopsis?.message} />
           </div>
           <Button
-            disabled={!isDirty || isLoadingUpload}
+            disabled={!isDirty || isLoadingUpload || isPending}
             className="mt-2 max-w-28"
             type="submit"
           >
