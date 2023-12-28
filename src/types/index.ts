@@ -25,8 +25,10 @@ export type BookPost = {
   photos?: string[];
   price: string;
   genre: string;
+  file_url: string;
 };
 
 export type GenrePost = {
   title: string;
+  photo: string;
 };

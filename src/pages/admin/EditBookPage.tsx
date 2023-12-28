@@ -1,9 +1,10 @@
-import { Fragment } from 'react'
+import { Fragment } from "react";
+import EditBookForm from "../../features/editbookpage/EditBookForm";
 
 export default function EditBookPage() {
   return (
     <Fragment>
-      <h1>MANUSIA API</h1>
+      <EditBookForm />
     </Fragment>
-  )
+  );
 }

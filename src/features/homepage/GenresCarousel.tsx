@@ -1,7 +1,10 @@
 import { Fragment } from 'react'
 import { Carousel } from 'flowbite-react'
+import { useFetchListGenre } from '../../hooks/useListGenre';
 
 export default function GenresCarousel() {
+  const { isLoading: isLoadingGenre, data: genres } = useFetchListGenre();
+
   return (
     <Fragment>
       <h1 className='text-3xl text-center mb-4 font-semibold mx-2'>VARIOUS BEST GENRES</h1>

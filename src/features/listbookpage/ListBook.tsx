@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
 import { FaEdit } from "react-icons/fa";
 import { FaLockOpen, FaLock } from "react-icons/fa";
-import { Col, Image, Pagination, Row } from "antd";
+import { Col, Empty, Image, Pagination, Row } from "antd";
 import {
   Link,
   useLocation,
@@ -56,7 +56,7 @@ export default function ListBook() {
 
   const { mutate } = useDeleteBook(() => {
     navigate("/admin/book");
-    showToastSuccess("Delete Book Success");
+    showToastSuccess("Suspend/Unsuspend Book Success");
   });
 
   const deleteBook = (id: string) => {
@@ -111,64 +111,72 @@ export default function ListBook() {
               <div className="text-center my-5">{error.message}</div>
             ) : (
               <>
-                <Row justify={"center"} className="gap-6 mb-8">
-                  {books?.data.map((book: BookAdmin) => (
-                    <Col key={book.id} xs={24} lg={10}>
-                      <div className="flex max-w-4xl mx-auto border-2 shadow-md rounded">
-                        <div className="flex-1 p-5">
-                          <h1 className="text-lg">
-                            Title:{" "}
-                            <span className="font-bold">{book.title}</span>
-                          </h1>
-                          <p className="text-sm">
-                            Author: <span>{book.author}</span>
-                          </p>
-                          <p className="mb-2 text-sm">
-                            Genre: <span>{book.genre.title}</span>
-                          </p>
-                          <Button
-                            size={"xs"}
-                            className="mb-2"
-                            onClick={() => {
-                              setSynopsisSelected(book.synopsis);
-                              setOpenModal(true);
-                            }}
-                          >
-                            See Full Synopsis
-                          </Button>
-                          <div className="flex gap-1">
-                            <Button color="blue" size={"xs"}>
-                              <FaEdit />
-                            </Button>
-                            {book.active ? (
+                {books?.data?.length ? (
+                  <Row justify={"center"} className="gap-6 mb-8">
+                    <>
+                      {books?.data.map((book: BookAdmin) => (
+                        <Col key={book.id} xs={24} lg={10}>
+                          <div className="flex max-w-4xl mx-auto border-2 shadow-md rounded">
+                            <div className="flex-1 p-5">
+                              <h1 className="text-lg">
+                                Title:{" "}
+                                <span className="font-bold">{book.title}</span>
+                              </h1>
+                              <p className="text-sm">
+                                Author: <span>{book.author}</span>
+                              </p>
+                              <p className="mb-2 text-sm">
+                                Genre: <span>{book.genre.title}</span>
+                              </p>
                               <Button
-                                onClick={() => deleteBook(book.id)}
-                                color="success"
                                 size={"xs"}
+                                className="mb-2"
+                                onClick={() => {
+                                  setSynopsisSelected(book.synopsis);
+                                  setOpenModal(true);
+                                }}
                               >
-                                <FaLockOpen />
+                                See Full Synopsis
                               </Button>
-                            ) : (
-                              <Button
-                                onClick={() => deleteBook(book.id)}
-                                color="dark"
-                                size={"xs"}
-                              >
-                                <FaLock />
-                              </Button>
-                            )}
+                              <div className="flex gap-1">
+                                <Link to={`/admin/book/${book.id}/edit`}>
+                                  <Button color="blue" size={"xs"}>
+                                    <FaEdit />
+                                  </Button>
+                                </Link>
+                                {book.active ? (
+                                  <Button
+                                    onClick={() => deleteBook(book.id)}
+                                    color="success"
+                                    size={"xs"}
+                                  >
+                                    <FaLockOpen />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    onClick={() => deleteBook(book.id)}
+                                    color="dark"
+                                    size={"xs"}
+                                  >
+                                    <FaLock />
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                            <Image
+                              width={"160px"}
+                              height={"180px"}
+                              className="rounded object-cover"
+                              src={book.photos[0]}
+                            />
                           </div>
-                        </div>
-                        <Image
-                          width={"160px"}
-                          height={"180px"}
-                          className="rounded object-cover"
-                          src={book.photos[0]}
-                        />
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
+                        </Col>
+                      ))}
+                    </>
+                  </Row>
+                ) : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )}
               </>
             )}
           </>

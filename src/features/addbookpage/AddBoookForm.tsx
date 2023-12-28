@@ -37,6 +37,7 @@ const schema = yup.object({
     .required("Genre is required")
     .notOneOf(["Book Genre"], "Genre is required"),
   photos: yup.array().min(1, "Photos is required"),
+  file_url: yup.string().required("File url is required"),
 });
 
 export default function AddBoookForm() {
@@ -46,7 +47,7 @@ export default function AddBoookForm() {
     navigate("/admin/book");
     showToastSuccess("Add Book Success");
   });
-  const { images, isLoading: isLoadingUpload, handleDrop, removeOne } = useUploadReactDropzone();
+  const { images, isLoading: isLoadingUpload, handleDrop, removeOne } = useUploadReactDropzone(6);
 
   const form = useForm<BookPost>({
     defaultValues: {
@@ -56,6 +57,7 @@ export default function AddBoookForm() {
       synopsis: "",
       genre: "Book Genre",
       photos: [],
+      file_url: "",
     },
     mode: "onTouched",
     resolver: yupResolver(schema),
@@ -142,6 +144,18 @@ export default function AddBoookForm() {
               }
             />
             <Validate error={errors.genre?.message} />
+          </div>
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="file_url" value="Book Pdf *" />
+            </div>
+            <TextInput
+              id="file_url"
+              type="text"
+              placeholder="Book Pdf"
+              {...register("file_url")}
+              helperText={<Validate error={errors.file_url?.message} />}
+            />
           </div>
           <div>
             <div className="mb-2 block">

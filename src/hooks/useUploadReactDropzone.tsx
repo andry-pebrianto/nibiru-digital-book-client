@@ -4,7 +4,7 @@ import { API } from "../utils/api";
 import { showToastError } from "../utils/toast";
 import { getError } from "../utils/error";
 
-export const useUploadReactDropzone = () => {
+export const useUploadReactDropzone = (maxUpload: number) => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,8 +15,8 @@ export const useUploadReactDropzone = () => {
     const fileAccept = acceptedFiles;
     const fileReject = rejectedFiles;
 
-    if (fileAccept.length + images.length > 6) {
-      showToastError("Each book can only have max 6 photo");
+    if (fileAccept.length + images.length > maxUpload) {
+      showToastError(`This input can only have max ${maxUpload} photo`);
     } else {
       if (!fileReject.length) {
         setIsLoading(true);
@@ -40,12 +40,13 @@ export const useUploadReactDropzone = () => {
     }
   };
 
-  const removeOne = (index: number) => {
+  const removeOne = (index: number = 0) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
   return {
     images,
+    setImages,
     isLoading,
     handleDrop,
     removeOne,
