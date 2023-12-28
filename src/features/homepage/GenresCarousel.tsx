@@ -1,22 +1,63 @@
-import { Fragment } from 'react'
-import { Carousel } from 'flowbite-react'
-import { useFetchListGenre } from '../../hooks/useListGenre';
+import { Fragment } from "react";
+import { Carousel } from "flowbite-react";
+import { useFetchListGenre } from "../../hooks/useListGenre";
+import { Genre } from "../../types";
 
 export default function GenresCarousel() {
-  const { isLoading: isLoadingGenre, data: genres } = useFetchListGenre();
+  const {
+    isLoading: isLoadingGenre,
+    isError,
+    error,
+    data: genres,
+  } = useFetchListGenre();
 
   return (
     <Fragment>
-      <h1 className='text-3xl text-center mb-4 font-semibold mx-2'>VARIOUS BEST GENRES</h1>
+      <h1 className="text-3xl text-center mb-4 font-semibold mx-2">
+        VARIOUS BEST GENRES
+      </h1>
       <div className="max-w-3xl h-80 mx-2 sm:mx-auto mb-16">
-        <Carousel>
-          <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-          <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-          <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-          <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-          <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
-        </Carousel>
+        {isLoadingGenre ? (
+          <div role="status" className="flex justify-center">
+            <svg
+              aria-hidden="true"
+              className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <>
+            {isError ? (
+              <div className="text-center my-5">{error.message}</div>
+            ) : (
+              <Carousel>
+                {genres?.data?.map((genre: Genre) => (
+                  <Fragment key={genre.id}>
+                    <h1 className="opacity-80 text-4xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-600 text-slate-100 px-10 py-3 rounded-lg font-bold">
+                      {genre.title}
+                    </h1>
+                    <div key={genre.id}>
+                      <img src={genre.photo} alt={genre.title} />
+                    </div>
+                  </Fragment>
+                ))}
+              </Carousel>
+            )}
+          </>
+        )}
       </div>
     </Fragment>
-  )
+  );
 }

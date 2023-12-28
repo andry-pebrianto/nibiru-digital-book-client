@@ -1,6 +1,7 @@
 export type Genre = {
   id: string;
   title: string;
+  photo: string;
   created_at: string;
   updated_at: string;
 };

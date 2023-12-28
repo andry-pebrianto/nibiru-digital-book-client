@@ -6,10 +6,10 @@ import { ColumnsType } from "antd/es/table";
 import { Button } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 import { Genre } from "../../types";
 import { useDeleteGenre } from "./hooks/useDeleteGenre";
 import { showToastSuccess } from "../../utils/toast";
-import Swal from "sweetalert2";
 
 type GenreWithKey = Genre & {
   key: number;

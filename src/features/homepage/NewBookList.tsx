@@ -1,36 +1,89 @@
-import { Fragment } from 'react'
-import { Card } from 'antd'
-import { Button } from 'flowbite-react'
-import { Link } from 'react-router-dom'
+import { Fragment } from "react";
+import { Card } from "antd";
+import { Button } from "flowbite-react";
+import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
+import moment from "moment";
+import { useFetchListNewBook } from "./hooks/useNewBook";
+import { BookAdmin } from "../../types";
 
 export default function NewBookList() {
+  const { isLoading, isError, error, data: books } = useFetchListNewBook();
+
   return (
     <Fragment>
       <div className="max-w-7xl mx-3 sm:mx-5 xl:mx-auto mb-16">
-        <h1 className='text-2xl mb-4 font-bold'>New Added</h1>
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-          <Card
-            className='w-full border-2 relative'
-            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-          >
-            <Link to={"/search?genreFilter=sciencefiction"}>
-              <p className='absolute top-2 left-2'>
-                <Button gradientMonochrome="info" size="xs" className='p-1' pill><span className='text-sm'>Science Fiction</span></Button>
-              </p>
-            </Link>
-            <p className='text-[16.5px] font-semibold mb-1'>One Piece Vol 1</p>
-            <p className='text-sm mb-4 text-gray-500'>Andry Pebrianto</p>
-            <p className='text-lg font-semibold text-end mb-3'>Rp 80,000</p>
+        <h1 className="text-2xl mb-4 font-bold">New Added</h1>
+        {isLoading ? (
+          <div role="status" className="flex justify-center">
+            <svg
+              aria-hidden="true"
+              className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <>
+            {isError ? (
+              <div className="text-center my-5">{error.message}</div>
+            ) : (
+              <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                {books?.data?.map((book: BookAdmin) => (
+                  <Card
+                    key={book.id}
+                    className="w-full border-2 relative"
+                    cover={<img alt="Book Cover" src={book?.photos[0]} className="h-[340px] object-cover" />}
+                  >
+                    <Link to={`/search?genreFilter=${book?.genre.title}`}>
+                      <p className="absolute top-2 left-2">
+                        <Button
+                          gradientMonochrome="info"
+                          size="xs"
+                          className="p-1"
+                          pill
+                        >
+                          <span className="text-sm">{book?.genre?.title}</span>
+                        </Button>
+                      </p>
+                    </Link>
+                    <p className="text-[16.5px] font-semibold mb-1">
+                      {book?.title}
+                    </p>
+                    <p className="text-sm mb-4 text-gray-500">{book?.author}</p>
+                    <p className="text-lg font-semibold text-end mb-3">
+                      IDR. {book?.price}
+                    </p>
 
-            <Link to={"/book/vryu3g8cho3v87gioinov3g8vi"}>
-              <Button color="blue" size={"sm"} className='mb-3'><span className='mr-2'>Go To Detail</span><FaArrowRight /></Button>
-            </Link>
-            <hr />
-            <p className='mt-3 text-[13px]'>Added at 11-11-2020</p>
-          </Card>
-        </div>
+                    <Link to={`/book/${book.id}`}>
+                      <Button color="blue" size={"sm"} className="mb-3">
+                        <span className="mr-2">Go To Detail</span>
+                        <FaArrowRight />
+                      </Button>
+                    </Link>
+                    <hr />
+                    <p className="mt-3 text-[13px]">
+                      Added at{" "}
+                      {moment(book.created_at).format("DD-MM-YYYY HH:mm:ss")}
+                    </p>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </Fragment>
-  )
+  );
 }

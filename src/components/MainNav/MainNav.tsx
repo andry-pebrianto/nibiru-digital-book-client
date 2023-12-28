@@ -31,12 +31,12 @@ export default function MainNav() {
       confirmButtonText: "Yes, Logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.clear();
-        reCheckAccessToken();
         API.delete(
           "/api/v1/customer/auth/logout/" +
             decryptData(localStorage.getItem("refreshToken") || "")
         );
+        localStorage.clear();
+        reCheckAccessToken();
         navigate("/");
       }
     });
