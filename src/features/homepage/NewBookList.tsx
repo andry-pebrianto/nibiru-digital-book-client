@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Card } from "antd";
+import { Card, Empty } from "antd";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
@@ -39,47 +39,65 @@ export default function NewBookList() {
             {isError ? (
               <div className="text-center my-5">{error.message}</div>
             ) : (
-              <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {books?.data?.map((book: BookAdmin) => (
-                  <Card
-                    key={book.id}
-                    className="w-full border-2 relative"
-                    cover={<img alt="Book Cover" src={book?.photos[0]} className="h-[340px] object-cover" />}
-                  >
-                    <Link to={`/search?genreFilter=${book?.genre.title}`}>
-                      <p className="absolute top-2 left-2">
-                        <Button
-                          gradientMonochrome="info"
-                          size="xs"
-                          className="p-1"
-                          pill
-                        >
-                          <span className="text-sm">{book?.genre?.title}</span>
-                        </Button>
-                      </p>
-                    </Link>
-                    <p className="text-[16.5px] font-semibold mb-1">
-                      {book?.title}
-                    </p>
-                    <p className="text-sm mb-4 text-gray-500">{book?.author}</p>
-                    <p className="text-lg font-semibold text-end mb-3">
-                      IDR. {book?.price}
-                    </p>
+              <>
+                {books?.data?.length ? (
+                  <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                    {books?.data?.map((book: BookAdmin) => (
+                      <Card
+                        key={book.id}
+                        className="w-full border-2 relative"
+                        cover={
+                          <img
+                            alt="Book Cover"
+                            src={book?.photos[0]}
+                            className="h-[340px] object-cover"
+                          />
+                        }
+                      >
+                        <Link to={`/search?genreFilter=${book?.genre.title}`}>
+                          <p className="absolute top-2 left-2">
+                            <Button
+                              gradientMonochrome="info"
+                              size="xs"
+                              className="p-1"
+                              pill
+                            >
+                              <span className="text-sm">
+                                {book?.genre?.title}
+                              </span>
+                            </Button>
+                          </p>
+                        </Link>
+                        <p className="text-[16.5px] font-semibold mb-1">
+                          {book?.title}
+                        </p>
+                        <p className="text-sm mb-4 text-gray-500">
+                          {book?.author}
+                        </p>
+                        <p className="text-lg font-semibold text-end mb-3">
+                          IDR. {book?.price}
+                        </p>
 
-                    <Link to={`/book/${book.id}`}>
-                      <Button color="blue" size={"sm"} className="mb-3">
-                        <span className="mr-2">Go To Detail</span>
-                        <FaArrowRight />
-                      </Button>
-                    </Link>
-                    <hr />
-                    <p className="mt-3 text-[13px]">
-                      Added at{" "}
-                      {moment(book.created_at).format("DD-MM-YYYY HH:mm:ss")}
-                    </p>
-                  </Card>
-                ))}
-              </div>
+                        <Link to={`/book/${book.id}`}>
+                          <Button color="blue" size={"sm"} className="mb-3">
+                            <span className="mr-2">Go To Detail</span>
+                            <FaArrowRight />
+                          </Button>
+                        </Link>
+                        <hr />
+                        <p className="mt-3 text-[13px]">
+                          Added at{" "}
+                          {moment(book.created_at).format(
+                            "DD-MM-YYYY HH:mm:ss"
+                          )}
+                        </p>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                )}
+              </>
             )}
           </>
         )}

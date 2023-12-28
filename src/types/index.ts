@@ -19,6 +19,11 @@ export type BookAdmin = {
   genre: Genre;
 };
 
+export type BookCustomer = BookAdmin & {
+  cutsomers_who_saving: [];
+  cutsomers_who_buying: [];
+};
+
 export type BookPost = {
   title: string;
   author: string;

@@ -7,10 +7,12 @@ import {
   QueryCache,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Provider } from "react-redux";
+import { AxiosError } from "axios";
 import Router from "./router";
+import store from "./redux/store";
 import { showToastError } from "./utils/toast";
 import { getError } from "./utils/error";
-import { AxiosError } from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const queryCLient = new QueryClient({
@@ -26,12 +28,14 @@ const queryCLient = new QueryClient({
 export default function App() {
   return (
     <Fragment>
-      <QueryClientProvider client={queryCLient}>
-        <GoogleOAuthProvider clientId="901151632118-i2kjppeplto5aded09fljgilvnhuneme.apps.googleusercontent.com">
-          <Router />
-        </GoogleOAuthProvider>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom" />
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryCLient}>
+          <GoogleOAuthProvider clientId="901151632118-i2kjppeplto5aded09fljgilvnhuneme.apps.googleusercontent.com">
+            <Router />
+          </GoogleOAuthProvider>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom" />
+        </QueryClientProvider>
+      </Provider>
       <ToastContainer />
     </Fragment>
   );

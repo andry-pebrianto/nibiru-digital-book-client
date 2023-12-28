@@ -1,5 +1,5 @@
-import { Button, Navbar } from "flowbite-react";
 import { Fragment } from "react";
+import { Button, Navbar } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaSearch } from "react-icons/fa";
@@ -13,6 +13,7 @@ import { decryptData } from "../../utils/encrypt";
 import { useCheckAccessToken } from "../../hooks/useCheck";
 import { showToastError } from "../../utils/toast";
 import { API } from "../../utils/api";
+import ProfileDropdown from "./ProfileDropdown";
 
 export default function MainNav() {
   const location = useLocation();
@@ -108,17 +109,20 @@ export default function MainNav() {
           {localStorage.getItem("refreshToken") &&
             decryptData(localStorage.getItem("accountType") || "") ===
               "customer" && (
-              <Navbar.Link
-                as={Link}
-                to={"/search"}
-                className="flex items-center"
-                active={location.pathname === "/search" ? true : false}
-              >
-                <span className="mr-1">
-                  <FaSearch />
-                </span>{" "}
-                Search
-              </Navbar.Link>
+              <>
+                <Navbar.Link
+                  as={Link}
+                  to={"/search"}
+                  className="flex items-center"
+                  active={location.pathname === "/search" ? true : false}
+                >
+                  <span className="mr-1">
+                    <FaSearch />
+                  </span>{" "}
+                  Search
+                </Navbar.Link>
+                <ProfileDropdown />
+              </>
             )}
           {/* admin */}
           {localStorage.getItem("refreshToken") &&
