@@ -45,11 +45,11 @@ export default function GenresCarousel() {
               <Carousel>
                 {genres?.data?.map((genre: Genre) => (
                   <Fragment key={genre.id}>
-                    <h1 className="opacity-80 text-4xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-600 text-slate-100 px-10 py-3 rounded-lg font-bold">
+                    <h1 className="opacity-80 text-4xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-600 text-slate-100 px-10 py-3 rounded-lg font-bold text-center">
                       {genre.title}
                     </h1>
                     <div key={genre.id}>
-                      <img src={genre.photo} alt={genre.title} />
+                      <img src={genre.photo} alt={genre.title} className="object-cover h-[450px] w-full" />
                     </div>
                   </Fragment>
                 ))}

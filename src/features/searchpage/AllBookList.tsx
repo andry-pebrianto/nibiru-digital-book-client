@@ -9,9 +9,14 @@ import {
 import { Button } from "flowbite-react";
 import { FaArrowRight } from "react-icons/fa";
 import moment from "moment";
-import { BookAdmin } from "../../types";
+import { FaCartPlus } from "react-icons/fa";
+import { BsFillCartCheckFill } from "react-icons/bs";
+import { BookCustomer } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getListBook } from "../../redux/book/listBookSlice";
+import { API } from "../../utils/api";
+import { showToastError } from "../../utils/toast";
+import { getError } from "../../utils/error";
 
 export default function AllBookList() {
   const location = useLocation();
@@ -41,13 +46,31 @@ export default function AllBookList() {
 
   useEffect(() => {
     setPage(parseInt(queryParams.get("page") || "0"));
-    dispatch(getListBook({
-      search: queryParams.get("searchFilter") || "",
-      genre: queryParams.get("genreFilter") || "",
-      page: queryParams.get("page") || "",
-    }));
+    dispatch(
+      getListBook({
+        search: queryParams.get("searchFilter") || "",
+        genre: queryParams.get("genreFilter") || "",
+        page: queryParams.get("page") || "",
+      })
+    );
     window.scrollTo(0, 0);
   }, [queryParams]);
+
+  const addToCartAndOpposite = async (bookId: string) => {
+    try {
+      await API.post(`/api/v1/customer/book/${bookId}/cart`);
+
+      dispatch(
+        getListBook({
+          search: queryParams.get("searchFilter") || "",
+          genre: queryParams.get("genreFilter") || "",
+          page: queryParams.get("page") || "",
+        })
+      );
+    } catch (error) {
+      showToastError(getError(error));
+    }
+  };
 
   return (
     <Fragment>
@@ -80,7 +103,7 @@ export default function AllBookList() {
               <>
                 {listBook?.length ? (
                   <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                    {listBook?.map((book: BookAdmin) => (
+                    {listBook?.map((book: BookCustomer) => (
                       <Card
                         key={book.id}
                         className="w-full border-2 relative"
@@ -116,12 +139,41 @@ export default function AllBookList() {
                           IDR. {book?.price}
                         </p>
 
-                        <Link to={`/book/${book.id}`}>
-                          <Button color="blue" size={"sm"} className="mb-3">
-                            <span className="mr-2">Go To Detail</span>
-                            <FaArrowRight />
-                          </Button>
-                        </Link>
+                        <div className="flex xs:block sm:flex gap-2">
+                          <Link to={`/book/${book.id}`}>
+                            <Button color="blue" size={"sm"} className="mb-2">
+                              <span className="mr-2">Detail</span>
+                              <FaArrowRight />
+                            </Button>
+                          </Link>
+                          {book.buyed ? (
+                            <h1>Udah Dibeli</h1>
+                          ) : (
+                            <>
+                              {book.saved ? (
+                                <Button
+                                  color="success"
+                                  size={"sm"}
+                                  className="mb-2"
+                                  onClick={() => addToCartAndOpposite(book.id)}
+                                >
+                                  <span className="mr-2">Remove</span>
+                                  <BsFillCartCheckFill />
+                                </Button>
+                              ) : (
+                                <Button
+                                  color="dark"
+                                  size={"sm"}
+                                  className="mb-3"
+                                  onClick={() => addToCartAndOpposite(book.id)}
+                                >
+                                  <span className="mr-2">Add</span>
+                                  <FaCartPlus />
+                                </Button>
+                              )}
+                            </>
+                          )}
+                        </div>
                         <hr />
                         <p className="mt-3 text-[13px]">
                           Added at{" "}

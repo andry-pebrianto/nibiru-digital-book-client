@@ -1,9 +1,24 @@
+export type UserDetail = {
+  id: string;
+  fullname: string;
+  email: string;
+  google_id: string;
+  profile_picture: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Genre = {
   id: string;
   title: string;
   photo: string;
   created_at: string;
   updated_at: string;
+};
+
+export type GenrePost = {
+  title: string;
+  photo: string;
 };
 
 export type BookAdmin = {
@@ -20,8 +35,8 @@ export type BookAdmin = {
 };
 
 export type BookCustomer = BookAdmin & {
-  cutsomers_who_saving: [];
-  cutsomers_who_buying: [];
+  saved: boolean;
+  buyed: boolean;
 };
 
 export type BookPost = {
@@ -32,9 +47,4 @@ export type BookPost = {
   price: string;
   genre: string;
   file_url: string;
-};
-
-export type GenrePost = {
-  title: string;
-  photo: string;
 };

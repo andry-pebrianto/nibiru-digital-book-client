@@ -80,7 +80,7 @@ export default function NewBookList() {
 
                         <Link to={`/book/${book.id}`}>
                           <Button color="blue" size={"sm"} className="mb-3">
-                            <span className="mr-2">Go To Detail</span>
+                            <span className="mr-2">Detail</span>
                             <FaArrowRight />
                           </Button>
                         </Link>
