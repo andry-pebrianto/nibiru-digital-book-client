@@ -1,17 +1,12 @@
-import {
-  Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
-  Navbar,
-} from "flowbite-react";
 import { Fragment } from "react";
+import { Dropdown, DropdownHeader, DropdownItem, Navbar } from "flowbite-react";
 import { FaUser } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import { BsCartFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileDropdown() {
+  const navigate = useNavigate();
+
   return (
     <Fragment>
       <Navbar.Link className="flex items-center cursor-pointer">
@@ -33,17 +28,12 @@ export default function ProfileDropdown() {
               name@flowbite.com
             </span>
           </DropdownHeader>
-          <Link to={"/transactions"}>
-            <DropdownItem className="gap-2">
-              <FaMoneyCheckAlt /> My Transaction
-            </DropdownItem>
-          </Link>
-          <DropdownDivider />
-          <Link to={"/cart"}>
-            <DropdownItem className="gap-2">
-              <BsCartFill /> My Cart
-            </DropdownItem>
-          </Link>
+          <DropdownItem
+            className="gap-2"
+            onClick={() => navigate("/transactions")}
+          >
+            <FaMoneyCheckAlt /> My Transaction
+          </DropdownItem>
         </Dropdown>
       </Navbar.Link>
     </Fragment>

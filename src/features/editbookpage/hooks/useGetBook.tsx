@@ -9,7 +9,7 @@ const fetchBookDetail = async (id: string) => {
 
 export const useFetchBookDetail = (id: string) => {
   return useQuery({
-    queryKey: ["book-detail"],
+    queryKey: ["book-detail-admin"],
     queryFn: () => fetchBookDetail(id),
     refetchOnWindowFocus: false,
   });

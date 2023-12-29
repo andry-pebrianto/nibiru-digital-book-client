@@ -14,6 +14,7 @@ import { useCheckAccessToken } from "../../hooks/useCheck";
 import { showToastError } from "../../utils/toast";
 import { API } from "../../utils/api";
 import ProfileDropdown from "./ProfileDropdown";
+import CartDrawer from "./CartDrawer";
 
 export default function MainNav() {
   const location = useLocation();
@@ -63,7 +64,7 @@ export default function MainNav() {
               "customer" ? (
                 <Link to={"/search"}>
                   <Button
-                    className="mr-2 hidden sm:block"
+                    className="mr-2 hidden lg:block"
                     gradientDuoTone="greenToBlue"
                   >
                     Discover New Book
@@ -121,6 +122,7 @@ export default function MainNav() {
                   </span>{" "}
                   Search
                 </Navbar.Link>
+                <CartDrawer />
                 <ProfileDropdown />
               </>
             )}

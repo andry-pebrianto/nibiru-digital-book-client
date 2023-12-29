@@ -39,7 +39,7 @@ export const getListBook = createAsyncThunk(
 );
 
 const listBookSlice = createSlice({
-  name: "suggested",
+  name: "list-book",
   initialState,
   reducers: {}, // tidak diisi karena memakai extraReducers
   extraReducers: (builder) => {

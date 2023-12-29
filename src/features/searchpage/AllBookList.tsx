@@ -17,6 +17,7 @@ import { getListBook } from "../../redux/book/listBookSlice";
 import { API } from "../../utils/api";
 import { showToastError } from "../../utils/toast";
 import { getError } from "../../utils/error";
+import { getCart } from "../../redux/book/cartSlice";
 
 export default function AllBookList() {
   const location = useLocation();
@@ -60,6 +61,7 @@ export default function AllBookList() {
     try {
       await API.post(`/api/v1/customer/book/${bookId}/cart`);
 
+      dispatch(getCart());
       dispatch(
         getListBook({
           search: queryParams.get("searchFilter") || "",
@@ -164,7 +166,7 @@ export default function AllBookList() {
                                 <Button
                                   color="dark"
                                   size={"sm"}
-                                  className="mb-3"
+                                  className="mb-2"
                                   onClick={() => addToCartAndOpposite(book.id)}
                                 >
                                   <span className="mr-2">Add</span>
