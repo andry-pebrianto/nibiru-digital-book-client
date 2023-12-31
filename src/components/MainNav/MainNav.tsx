@@ -90,7 +90,7 @@ export default function MainNav() {
           )}
           <Navbar.Toggle />
         </div>
-        <Navbar.Collapse className="lg:-ml-16">
+        <Navbar.Collapse>
           {/* guest & customer) */}
           {decryptData(localStorage.getItem("accountType") || "") !==
             "admin" && (

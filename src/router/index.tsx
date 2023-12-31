@@ -12,6 +12,7 @@ import EditBookPage from "../pages/admin/EditBookPage";
 import ListGenrePage from "../pages/admin/ListGenrePage";
 import AddGenrePage from "../pages/admin/AddGenrePage";
 import EditGenrePage from "../pages/admin/EditGenrePage";
+import TransactionDetailPage from "../pages/customer/TransactionDetailPage";
 import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
 
@@ -98,6 +99,18 @@ export default function Router() {
                   <OnlyLoggedAndCustomer>
                     <Main>
                       <DetailBookPage />
+                    </Main>
+                  </OnlyLoggedAndCustomer>
+                }
+              />
+            </Route>
+            <Route path="/transaction/:id">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndCustomer>
+                    <Main>
+                      <TransactionDetailPage />
                     </Main>
                   </OnlyLoggedAndCustomer>
                 }

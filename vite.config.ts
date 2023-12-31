@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       "process.env.API_URL": JSON.stringify(env.API_URL),
+      "process.env.MIDTRANS_CLIENT_KEY": JSON.stringify(env.MIDTRANS_CLIENT_KEY),
+      "process.env.MIDTRANS_APP_URL": JSON.stringify(env.MIDTRANS_APP_URL),
     },
     plugins: [react()],
   };

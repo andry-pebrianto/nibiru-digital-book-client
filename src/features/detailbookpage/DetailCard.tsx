@@ -1,21 +1,23 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Card, Col, Image, Row } from "antd";
 import { FaCartPlus } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import { Modal, Button as ButtonFlow } from "flowbite-react";
 import ReactHtmlParser from "html-react-parser";
-import { useFetchDetailBook } from "./hooks/useDetailBook";
 import { BsFillCartCheckFill } from "react-icons/bs";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { useFetchDetailBook } from "./hooks/useDetailBook";
 import { API } from "../../utils/api";
 import { showToastError } from "../../utils/toast";
 import { getError } from "../../utils/error";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getCart } from "../../redux/book/cartSlice";
-import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { BookAdmin } from "../../types";
 
 export default function DetailCard() {
   const params = useParams();
+  const { data: cart } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const {
     isLoading,
@@ -25,6 +27,7 @@ export default function DetailCard() {
     refetch,
   } = useFetchDetailBook(params.id || "");
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   const addToCartAndOpposite = async (bookId: string) => {
     try {
@@ -39,7 +42,20 @@ export default function DetailCard() {
 
   useEffect(() => {
     refetch();
-  }, [params])
+  }, [params]);
+
+  const buyBook = async () => {
+    const transaction = await API.post("/api/v1/customer/transaction", {
+      bookId: params.id,
+    });
+
+    if (cart.map((item: BookAdmin) => item.id).includes(params.id || "")) {
+      await API.post(`/api/v1/customer/book/${params.id}/cart`);
+      dispatch(getCart());
+    }
+
+    navigate(`/transaction/${transaction.data.data.transactionId}`);
+  };
 
   return (
     <Fragment>
@@ -143,7 +159,12 @@ export default function DetailCard() {
                   </Image.PreviewGroup>
                   <br />
                   <div className="flex justify-end gap-2">
-                    <ButtonFlow color="blue" size={"sm"} className="mb-2">
+                    <ButtonFlow
+                      color="blue"
+                      size={"sm"}
+                      className="mb-2"
+                      onClick={buyBook}
+                    >
                       <span className="text-lg">
                         <MdOutlineShoppingCartCheckout />
                       </span>

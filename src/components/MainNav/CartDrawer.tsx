@@ -1,16 +1,18 @@
 import { Fragment, useEffect, useState } from "react";
-import { Badge, Button, Card, Navbar } from "flowbite-react";
+import { Badge, Button, Navbar } from "flowbite-react";
 import { BsCartFill } from "react-icons/bs";
 import { BiDetail } from "react-icons/bi";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { Drawer } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getCart } from "../../redux/book/cartSlice";
 import { BookAdmin } from "../../types";
+import { API } from "../../utils/api";
 
 export default function CartDrawer() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     data: cart,
     isLoading,
@@ -32,6 +34,20 @@ export default function CartDrawer() {
     setOpen(false);
   };
 
+  const buyBook = async (bookId: string) => {
+    const transaction = await API.post("/api/v1/customer/transaction", {
+      bookId,
+    });
+
+    if (cart.map((item: BookAdmin) => item.id).includes(bookId)) {
+      await API.post(`/api/v1/customer/book/${bookId}/cart`);
+      dispatch(getCart());
+    }
+
+    onClose();
+    navigate(`/transaction/${transaction.data.data.transactionId}`);
+  };
+
   return (
     <Fragment>
       <Navbar.Link
@@ -42,10 +58,12 @@ export default function CartDrawer() {
           <BsCartFill />
         </span>{" "}
         Cart{" "}
-        {cart.length && (
+        {cart.length ? (
           <Badge className="ml-1" color="info">
             {cart.length}
           </Badge>
+        ) : (
+          ""
         )}
       </Navbar.Link>
 
@@ -82,29 +100,58 @@ export default function CartDrawer() {
               <div className="text-center mb-8">{error}</div>
             ) : (
               <>
-                {cart.map((book: BookAdmin) => (
-                  <Card className="max-w-full mb-3">
-                    <h5 className="text-lg font-bold text-gray-900">
-                      {book.title}
-                    </h5>
-                    <div className="flex gap-2">
-                      <Link to={`/book/${book.id}`}>
-                        <Button color="success" size={"xs"} className="mb-2">
-                          <span className="text-lg">
-                            <BiDetail />
-                          </span>
-                          <span className="ml-2 mt-[2px]">DETAIL</span>
-                        </Button>
-                      </Link>
-                      <Button color="blue" size={"xs"} className="mb-2">
-                        <span className="text-lg">
-                          <MdOutlineShoppingCartCheckout />
-                        </span>
-                        <span className="ml-2 mt-[2px]">BUY NOW</span>
-                      </Button>
-                    </div>
-                  </Card>
-                ))}
+                {cart.length ? (
+                  <>
+                    {cart.map((book: BookAdmin) => (
+                      <div
+                        key={book.id}
+                        className="max-w-full mb-4 py-3 px-5 border-2 shadow-sm rounded-sm"
+                      >
+                        <div className="flex gap-4 items-center">
+                          <div>
+                            <img
+                              src={book?.photos[0]}
+                              alt="Book Image"
+                              className="w-16 h-[90px] object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h5 className="text-lg font-bold text-gray-900 mb-1">
+                              {book.title}
+                            </h5>
+                            <div className="flex gap-2">
+                              <Link to={`/book/${book.id}`}>
+                                <Button
+                                  color="success"
+                                  size={"xs"}
+                                  className="mb-2"
+                                >
+                                  <span className="text-lg">
+                                    <BiDetail />
+                                  </span>
+                                  <span className="ml-2 mt-[2px]">DETAIL</span>
+                                </Button>
+                              </Link>
+                              <Button
+                                onClick={() => buyBook(book.id)}
+                                color="blue"
+                                size={"xs"}
+                                className="mb-2"
+                              >
+                                <span className="text-lg">
+                                  <MdOutlineShoppingCartCheckout />
+                                </span>
+                                <span className="ml-2 mt-[2px]">BUY NOW</span>
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <h1 className="text-3xl text-center">Cart Empty</h1>
+                )}
               </>
             )}
           </>
