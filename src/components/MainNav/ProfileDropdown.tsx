@@ -1,11 +1,19 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Dropdown, DropdownHeader, DropdownItem, Navbar } from "flowbite-react";
 import { FaUser } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { getProfile } from "../../redux/book/profileSlice";
 
 export default function ProfileDropdown() {
+  const { data: profile } = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
 
   return (
     <Fragment>
@@ -23,10 +31,17 @@ export default function ProfileDropdown() {
           }
         >
           <DropdownHeader>
-            <span className="block text-sm">Bonnie Green</span>
-            <span className="block truncate text-sm font-medium">
-              name@flowbite.com
-            </span>
+            <div className="flex gap-2 items-center">
+              <div>
+                <img src={profile?.profile_picture} width={"50px"} height={"50px"} className="object-cover rounded-full" alt="Profile Picture" />
+              </div>
+              <div>
+                <span className="block text-sm font-bold">{profile?.fullname}</span>
+                <span className="block truncate text-sm font-medium">
+                  {profile?.email}
+                </span>
+              </div>
+            </div>
           </DropdownHeader>
           <DropdownItem
             className="gap-2"

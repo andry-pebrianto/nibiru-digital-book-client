@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { CSSProperties, Fragment } from "react";
 import { Card, Empty } from "antd";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
@@ -6,6 +6,13 @@ import { FaArrowRight } from "react-icons/fa";
 import moment from "moment";
 import { useFetchListNewBook } from "./hooks/useNewBook";
 import { BookAdmin } from "../../types";
+
+const customStyleTitle: CSSProperties = {
+  display: "-webkit-box",
+  WebkitLineClamp: 1,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+};
 
 export default function NewBookList() {
   const { isLoading, isError, error, data: books } = useFetchListNewBook();
@@ -68,7 +75,7 @@ export default function NewBookList() {
                             </Button>
                           </p>
                         </Link>
-                        <p className="text-[16.5px] font-semibold mb-1">
+                        <p className="text-[16.5px] font-semibold mb-1" style={customStyleTitle}>
                           {book?.title}
                         </p>
                         <p className="text-sm mb-4 text-gray-500">

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { CSSProperties, Fragment, useEffect, useState } from "react";
 import { Card, Empty, Pagination } from "antd";
 import {
   Link,
@@ -11,6 +11,7 @@ import { FaArrowRight } from "react-icons/fa";
 import moment from "moment";
 import { FaCartPlus } from "react-icons/fa";
 import { BsFillCartCheckFill } from "react-icons/bs";
+import { FaBook } from "react-icons/fa";
 import { BookCustomer } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getListBook } from "../../redux/book/listBookSlice";
@@ -18,6 +19,14 @@ import { API } from "../../utils/api";
 import { showToastError } from "../../utils/toast";
 import { getError } from "../../utils/error";
 import { getCart } from "../../redux/book/cartSlice";
+import { downloadFile } from "../../utils/download";
+
+const customStyleTitle: CSSProperties = {
+  display: "-webkit-box",
+  WebkitLineClamp: 1,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+};
 
 export default function AllBookList() {
   const location = useLocation();
@@ -131,7 +140,7 @@ export default function AllBookList() {
                             </Button>
                           </p>
                         </Link>
-                        <p className="text-[16.5px] font-semibold mb-1">
+                        <p className="text-[16.5px] font-semibold mb-1" style={customStyleTitle}>
                           {book?.title}
                         </p>
                         <p className="text-sm mb-4 text-gray-500">
@@ -149,7 +158,17 @@ export default function AllBookList() {
                             </Button>
                           </Link>
                           {book.buyed ? (
-                            <h1>Udah Dibeli</h1>
+                            <Button
+                              color="success"
+                              size={"sm"}
+                              className="mb-2"
+                              onClick={() =>
+                                downloadFile(book.file_url, book.title)
+                              }
+                            >
+                              <span className="mr-2">Read</span>
+                              <FaBook />
+                            </Button>
                           ) : (
                             <>
                               {book.saved ? (
@@ -194,7 +213,7 @@ export default function AllBookList() {
           </>
         )}
         {!isLoading && !isError ? (
-          <div className="text-center">
+          <div className="text-center mt-4">
             <Pagination
               showQuickJumper={100 >= 100}
               showSizeChanger={false}

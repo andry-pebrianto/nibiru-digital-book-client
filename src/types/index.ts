@@ -32,6 +32,7 @@ export type BookAdmin = {
   created_at: string;
   updated_at: string;
   genre: Genre;
+  file_url: string;
 };
 
 export type BookCustomer = BookAdmin & {
@@ -47,4 +48,14 @@ export type BookPost = {
   price: string;
   genre: string;
   file_url: string;
+};
+
+export type Profile = {
+  id: string;
+  fullname: string;
+  email: string;
+  google_id: string;
+  profile_picture: string;
+  created_at: string;
+  updated_at: string;
 };

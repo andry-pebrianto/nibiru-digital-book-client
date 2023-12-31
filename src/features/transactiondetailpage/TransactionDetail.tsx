@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { Button } from "flowbite-react";
 import { MdCancel } from "react-icons/md";
@@ -13,6 +13,7 @@ export default function TransactionDetail() {
     isError,
     error,
     data: transaction,
+    refetch,
   } = useFetchDetailTransaction(params.id || "");
   const { snapEmbed, snapHide } = useSnap();
   const [showSnap, setShowSnap] = useState<boolean>(false);
@@ -27,10 +28,14 @@ export default function TransactionDetail() {
     snapHide();
   };
 
+  useEffect(() => {
+    refetch();
+  }, [params]);
+
   return (
     <Fragment>
       <div className="max-w-3xl mx-10 md:mx-auto bg-slate-100 p-8 mb-8 rounded-sm shadow-lg border-2 border-lime-600">
-        <h1 className="text-3xl font-bold mb-6">
+        <h1 className="text-3xl font-bold mb-4">
           {showSnap ? "Payment Detail" : "Transaction Detail"}
         </h1>
         {isLoading ? (
@@ -97,10 +102,23 @@ export default function TransactionDetail() {
                         </span>
                       </p>
                     </div>
-                    <Button onClick={payBook} className="mt-4" size={"sm"}>
-                      <FaMoneyBillWave />
-                      <span className="ml-2">Pay Now!</span>
-                    </Button>
+                    {transaction?.data?.status === "PENDING" && (
+                      <Button onClick={payBook} className="mt-4" size={"sm"}>
+                        <FaMoneyBillWave />
+                        <span className="ml-2">Pay Now!</span>
+                      </Button>
+                    )}
+                    {transaction?.data?.status === "FAILURE" && (
+                      <h1 className="mt-4">Payment has beed failed!</h1>
+                    )}
+                    {transaction?.data?.status === "SUCCESS" && (
+                      <>
+                        <h1 className="mt-4 text-lg bg-green-300 p-2 rounded-lg text-center shadow-lg mb-2">
+                          Payment has been successful!
+                        </h1>
+                        <Link to={"/collection"} className="text-blue-600">Go To Collection Page</Link>
+                      </>
+                    )}
                   </>
                 )}
                 {showSnap && (

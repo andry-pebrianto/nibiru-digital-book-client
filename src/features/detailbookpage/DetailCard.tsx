@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Card, Col, Image, Row } from "antd";
-import { FaCartPlus } from "react-icons/fa";
+import { FaBook, FaCartPlus } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import { Modal, Button as ButtonFlow } from "flowbite-react";
@@ -14,6 +14,7 @@ import { getError } from "../../utils/error";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getCart } from "../../redux/book/cartSlice";
 import { BookAdmin } from "../../types";
+import { downloadFile } from "../../utils/download";
 
 export default function DetailCard() {
   const params = useParams();
@@ -45,16 +46,20 @@ export default function DetailCard() {
   }, [params]);
 
   const buyBook = async () => {
-    const transaction = await API.post("/api/v1/customer/transaction", {
-      bookId: params.id,
-    });
+    try {
+      const transaction = await API.post("/api/v1/customer/transaction", {
+        bookId: params.id,
+      });
 
-    if (cart.map((item: BookAdmin) => item.id).includes(params.id || "")) {
-      await API.post(`/api/v1/customer/book/${params.id}/cart`);
-      dispatch(getCart());
+      if (cart.map((item: BookAdmin) => item.id).includes(params.id || "")) {
+        await API.post(`/api/v1/customer/book/${params.id}/cart`);
+        dispatch(getCart());
+      }
+
+      navigate(`/transaction/${transaction.data.data.transactionId}`);
+    } catch (error) {
+      showToastError(getError(error));
     }
-
-    navigate(`/transaction/${transaction.data.data.transactionId}`);
   };
 
   return (
@@ -159,41 +164,61 @@ export default function DetailCard() {
                   </Image.PreviewGroup>
                   <br />
                   <div className="flex justify-end gap-2">
-                    <ButtonFlow
-                      color="blue"
-                      size={"sm"}
-                      className="mb-2"
-                      onClick={buyBook}
-                    >
-                      <span className="text-lg">
-                        <MdOutlineShoppingCartCheckout />
-                      </span>
-                      <span className="ml-2 mt-[2px]">BUY NOW</span>
-                    </ButtonFlow>
-                    {book?.data?.saved ? (
+                    {book?.data?.buyed ? (
                       <ButtonFlow
                         color="success"
                         size={"sm"}
                         className="mb-2"
-                        onClick={() => addToCartAndOpposite(book?.data?.id)}
+                        onClick={() =>
+                          downloadFile(book?.data?.file_url, book?.data?.title)
+                        }
                       >
                         <span className="text-lg">
-                          <BsFillCartCheckFill />
+                          <FaBook />
                         </span>
-                        <span className="ml-2 mt-[2px]">REMOVE FROM CART</span>
+                        <span className="ml-2 mt-[2px]">READ</span>
                       </ButtonFlow>
                     ) : (
-                      <ButtonFlow
-                        color="dark"
-                        size={"sm"}
-                        className="mb-2"
-                        onClick={() => addToCartAndOpposite(book?.data?.id)}
-                      >
-                        <span className="text-lg">
-                          <FaCartPlus />
-                        </span>
-                        <span className="ml-2 mt-[2px]">ADD TO CART</span>
-                      </ButtonFlow>
+                      <>
+                        <ButtonFlow
+                          color="blue"
+                          size={"sm"}
+                          className="mb-2"
+                          onClick={buyBook}
+                        >
+                          <span className="text-lg">
+                            <MdOutlineShoppingCartCheckout />
+                          </span>
+                          <span className="ml-2 mt-[2px]">BUY NOW</span>
+                        </ButtonFlow>
+                        {book?.data?.saved ? (
+                          <ButtonFlow
+                            color="success"
+                            size={"sm"}
+                            className="mb-2"
+                            onClick={() => addToCartAndOpposite(book?.data?.id)}
+                          >
+                            <span className="text-lg">
+                              <BsFillCartCheckFill />
+                            </span>
+                            <span className="ml-2 mt-[2px]">
+                              REMOVE FROM CART
+                            </span>
+                          </ButtonFlow>
+                        ) : (
+                          <ButtonFlow
+                            color="dark"
+                            size={"sm"}
+                            className="mb-2"
+                            onClick={() => addToCartAndOpposite(book?.data?.id)}
+                          >
+                            <span className="text-lg">
+                              <FaCartPlus />
+                            </span>
+                            <span className="ml-2 mt-[2px]">ADD TO CART</span>
+                          </ButtonFlow>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getCart } from "../../redux/book/cartSlice";
 import { BookAdmin } from "../../types";
 import { API } from "../../utils/api";
+import { showToastError } from "../../utils/toast";
+import { getError } from "../../utils/error";
 
 export default function CartDrawer() {
   const dispatch = useAppDispatch();
@@ -35,17 +37,21 @@ export default function CartDrawer() {
   };
 
   const buyBook = async (bookId: string) => {
-    const transaction = await API.post("/api/v1/customer/transaction", {
-      bookId,
-    });
+    try {
+      const transaction = await API.post("/api/v1/customer/transaction", {
+        bookId,
+      });
 
-    if (cart.map((item: BookAdmin) => item.id).includes(bookId)) {
-      await API.post(`/api/v1/customer/book/${bookId}/cart`);
-      dispatch(getCart());
+      if (cart.map((item: BookAdmin) => item.id).includes(bookId)) {
+        await API.post(`/api/v1/customer/book/${bookId}/cart`);
+        dispatch(getCart());
+      }
+
+      onClose();
+      navigate(`/transaction/${transaction.data.data.transactionId}`);
+    } catch (error) {
+      showToastError(getError(error));
     }
-
-    onClose();
-    navigate(`/transaction/${transaction.data.data.transactionId}`);
   };
 
   return (
