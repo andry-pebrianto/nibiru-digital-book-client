@@ -19,7 +19,7 @@ const columns: ColumnsType<GenreWithKey> = [
   {
     title: "No",
     dataIndex: "",
-    render: (data, item, index) => {
+    render: (_, __, index) => {
       return <p>{index + 1}</p>;
     },
     align: "center",
@@ -35,7 +35,7 @@ const columns: ColumnsType<GenreWithKey> = [
   {
     title: "Created At",
     dataIndex: "created_at",
-    render: (data, item) => {
+    render: (_, item) => {
       return <p>{moment(item.created_at).format("DD-MM-YYYY HH:mm:ss")}</p>;
     },
     align: "center",
@@ -44,7 +44,7 @@ const columns: ColumnsType<GenreWithKey> = [
   {
     title: "Updated At",
     dataIndex: "updated_at",
-    render: (data, item) => {
+    render: (_, item) => {
       return <p>{moment(item.updated_at).format("DD-MM-YYYY HH:mm:ss")}</p>;
     },
     align: "center",
