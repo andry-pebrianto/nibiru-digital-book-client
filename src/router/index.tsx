@@ -13,6 +13,8 @@ import ListGenrePage from "../pages/admin/ListGenrePage";
 import AddGenrePage from "../pages/admin/AddGenrePage";
 import EditGenrePage from "../pages/admin/EditGenrePage";
 import TransactionDetailPage from "../pages/customer/TransactionDetailPage";
+import TransactionListPage from "../pages/customer/TransactionListPage";
+import CollectionListPage from "../pages/customer/CollectionListPage";
 import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
 
@@ -111,6 +113,30 @@ export default function Router() {
                   <OnlyLoggedAndCustomer>
                     <Main>
                       <TransactionDetailPage />
+                    </Main>
+                  </OnlyLoggedAndCustomer>
+                }
+              />
+            </Route>
+            <Route path="/transaction">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndCustomer>
+                    <Main>
+                      <TransactionListPage />
+                    </Main>
+                  </OnlyLoggedAndCustomer>
+                }
+              />
+            </Route>
+            <Route path="/library">
+              <Route
+                index
+                element={
+                  <OnlyLoggedAndCustomer>
+                    <Main>
+                      <CollectionListPage />
                     </Main>
                   </OnlyLoggedAndCustomer>
                 }

@@ -12,6 +12,5 @@ export const useFetchListNewBook = () => {
     queryKey: ["list-new-book"],
     queryFn: () => fetchListNewBook(),
     staleTime: 10000,
-    refetchOnWindowFocus: false,
   });
 };

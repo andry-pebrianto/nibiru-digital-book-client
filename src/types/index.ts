@@ -59,3 +59,15 @@ export type Profile = {
   created_at: string;
   updated_at: string;
 };
+
+export type TransactionItem = {
+  id: string;
+  status: string;
+  total: number;
+  snap_token: string;
+  snap_redirect_url: string;
+  created_at: string;
+  updated_at: string;
+  customer: Profile;
+  book: BookAdmin;
+};

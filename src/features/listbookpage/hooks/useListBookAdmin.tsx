@@ -22,6 +22,5 @@ export const useFetchListBookAdmin = (
     queryKey: ["list-book-admin"],
     queryFn: () => fetchListBookAdmin(search, genre, page),
     staleTime: 10000,
-    refetchOnWindowFocus: false,
   });
 };

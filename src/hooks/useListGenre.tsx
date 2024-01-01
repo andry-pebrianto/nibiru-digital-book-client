@@ -12,6 +12,5 @@ export const useFetchListGenre = () => {
     queryKey: ["list-genre"],
     queryFn: () => fetchListGenre(),
     staleTime: 10000,
-    refetchOnWindowFocus: false,
   });
 };

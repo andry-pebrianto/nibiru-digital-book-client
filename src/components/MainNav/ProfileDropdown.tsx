@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { Dropdown, DropdownDivider, DropdownHeader, DropdownItem, Navbar } from "flowbite-react";
-import { FaBook, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { IoLibrary } from "react-icons/io5";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -45,16 +46,16 @@ export default function ProfileDropdown() {
           </DropdownHeader>
           <DropdownItem
             className="gap-2"
-            onClick={() => navigate("/transactions")}
+            onClick={() => navigate("/library")}
           >
-            <FaMoneyCheckAlt /> My Transaction
+            <IoLibrary /> My Library
           </DropdownItem>
           <DropdownDivider />
           <DropdownItem
             className="gap-2"
-            onClick={() => navigate("/collections")}
+            onClick={() => navigate("/transaction")}
           >
-            <FaBook /> My Book Collection
+            <FaMoneyCheckAlt /> My Transaction
           </DropdownItem>
         </Dropdown>
       </Navbar.Link>

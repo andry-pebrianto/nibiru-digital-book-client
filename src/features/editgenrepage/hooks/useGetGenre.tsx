@@ -11,6 +11,5 @@ export const useFetchGenreDetail = (id: string) => {
   return useQuery({
     queryKey: ["genre-detail"],
     queryFn: () => fetchGenreDetail(id),
-    refetchOnWindowFocus: false,
   });
 };

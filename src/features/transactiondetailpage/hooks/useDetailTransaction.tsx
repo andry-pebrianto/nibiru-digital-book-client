@@ -11,6 +11,5 @@ export const useFetchDetailTransaction = (id: string) => {
   return useQuery({
     queryKey: ["transaction-detail"],
     queryFn: () => fetchDetailTransaction(id),
-    refetchOnWindowFocus: false,
   });
 };

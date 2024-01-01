@@ -11,6 +11,5 @@ export const useFetchBookDetail = (id: string) => {
   return useQuery({
     queryKey: ["book-detail-admin"],
     queryFn: () => fetchBookDetail(id),
-    refetchOnWindowFocus: false,
   });
 };
