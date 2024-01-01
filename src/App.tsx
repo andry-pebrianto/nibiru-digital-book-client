@@ -30,7 +30,7 @@ export default function App() {
     <Fragment>
       <Provider store={store}>
         <QueryClientProvider client={queryCLient}>
-          <GoogleOAuthProvider clientId="901151632118-i2kjppeplto5aded09fljgilvnhuneme.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
             <Router />
           </GoogleOAuthProvider>
           <ReactQueryDevtools initialIsOpen={false} position="bottom" />
