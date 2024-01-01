@@ -10,6 +10,7 @@ const store = configureStore({
     cart: cartSlice,
     profile: profileSlice,
   },
+  devTools: process.env.NODE_ENV === "prod" ? false : true,
 });
 
 type RootState = ReturnType<typeof store.getState>;

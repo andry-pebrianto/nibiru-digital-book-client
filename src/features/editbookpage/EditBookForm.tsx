@@ -298,7 +298,7 @@ export default function EditBoookForm() {
         )}
       </div>
 
-      <DevTool control={control} />
+      {process.env.NODE_ENV !== "prod" && <DevTool control={control} />}
     </Fragment>
   );
 }
