@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
       "process.env.MIDTRANS_CLIENT_KEY": JSON.stringify(env.MIDTRANS_CLIENT_KEY),
       "process.env.MIDTRANS_APP_URL": JSON.stringify(env.MIDTRANS_APP_URL),
       "process.env.GOOGLE_CLIENT_ID": JSON.stringify(env.GOOGLE_CLIENT_ID),
+      "process.env.ENCRYPT_SECRET": JSON.stringify(env.ENCRYPT_SECRET),
     },
     plugins: [react()],
   };
