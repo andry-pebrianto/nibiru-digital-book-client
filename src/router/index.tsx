@@ -17,6 +17,7 @@ import TransactionListPage from "../pages/customer/TransactionListPage";
 import LibraryPage from "../pages/customer/LibraryPage";
 import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
+import NotFound from "../pages/NotFound";
 
 export default function Router() {
   const { isFetchedAfterMount } = useCheckAccessToken();
@@ -224,6 +225,7 @@ export default function Router() {
                 }
               />
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       )}
