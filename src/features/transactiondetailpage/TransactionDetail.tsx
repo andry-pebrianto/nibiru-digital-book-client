@@ -116,7 +116,7 @@ export default function TransactionDetail() {
                         <h1 className="mt-4 text-lg bg-green-300 p-2 rounded-lg text-center shadow-lg mb-2">
                           Payment has been successful!
                         </h1>
-                        <Link to={"/collection"} className="text-blue-600">Go To Collection Page</Link>
+                        <Link to={"/library"} className="text-blue-600">Go To Library Page</Link>
                       </>
                     )}
                   </>

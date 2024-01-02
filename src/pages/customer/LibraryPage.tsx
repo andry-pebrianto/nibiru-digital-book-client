@@ -1,9 +1,10 @@
 import { Fragment } from "react";
+import BookList from "../../features/librarypage/BookList";
 
 export default function CollectionListPage() {
   return (
     <Fragment>
-      <h1>Collection List Page</h1>
+      <BookList />
     </Fragment>
   );
 }

@@ -14,7 +14,7 @@ import AddGenrePage from "../pages/admin/AddGenrePage";
 import EditGenrePage from "../pages/admin/EditGenrePage";
 import TransactionDetailPage from "../pages/customer/TransactionDetailPage";
 import TransactionListPage from "../pages/customer/TransactionListPage";
-import CollectionListPage from "../pages/customer/CollectionListPage";
+import LibraryPage from "../pages/customer/LibraryPage";
 import { useCheckAccessToken } from "../hooks/useCheck";
 import { decryptData } from "../utils/encrypt";
 
@@ -136,7 +136,7 @@ export default function Router() {
                 element={
                   <OnlyLoggedAndCustomer>
                     <Main>
-                      <CollectionListPage />
+                      <LibraryPage />
                     </Main>
                   </OnlyLoggedAndCustomer>
                 }
