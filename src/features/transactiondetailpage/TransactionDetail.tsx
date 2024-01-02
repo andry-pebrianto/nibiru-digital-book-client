@@ -34,7 +34,7 @@ export default function TransactionDetail() {
 
   return (
     <Fragment>
-      <div className="max-w-3xl mx-10 md:mx-auto bg-slate-100 p-8 mb-8 rounded-sm shadow-lg border-2 border-lime-600">
+      <div className="max-w-3xl mx-2 md:mx-auto bg-slate-100 p-8 mb-8 rounded-sm shadow-lg border-2 border-lime-600">
         <h1 className="text-3xl font-bold mb-4">
           {showSnap ? "Payment Detail" : "Transaction Detail"}
         </h1>
