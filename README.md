@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nibiru Digital Book is an online shop that sells digital books (pdf). On this website, users can add books to their shopping cart, make digital payments using Midtrans, and download digital books that have been purchased.
 
-Currently, two official plugins are available:
+### Technology Used
+- [ReactJS](https://react.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Tanstack Query 5](https://tanstack.com/query/v5/)
+- [React Hook Form](https://www.react-hook-form.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Flowbite React](https://www.flowbite-react.com/)
+- [Ant Design](https://ant.design/)
+- [Axios](https://github.com/axios/axios)
+- [Moment](https://momentjs.com/)
+  
+<!-- GETTING STARTED -->
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation
+- Clone This Repository
 
-## Expanding the ESLint configuration
+`https://github.com/andry-pebrianto/nibiru-digital-book-client.git`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Install Module
 
-- Configure the top-level `parserOptions` property like this:
+`yarn`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- Setting .env
+
+```bash
+NODE_ENV=
+API_URL=
+MIDTRANS_CLIENT_KEY=
+MIDTRANS_APP_URL=
+GOOGLE_CLIENT_ID=
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Executing program
+
+- Run this project with `yarn run dev`.
+
+<!-- RELATED PROJECT -->
+## Related Project
+
+- [Nibiru Digital Book API](https://github.com/andry-pebrianto/nibiru-digital-book-server)
+- [Nibiru Digital Book Demo](https://nibirudigitalbook.netlify.app/)
+
+<!-- CONTACT INFO -->
+## Contact Info
+
+Contributors names and contact info:
+
+1. Andry Pebrianto
+
+- [Linkedin](https://www.linkedin.com/in/andry-pebrianto)
+
+## License 
+
+This project is licensed under the MIT License - see the LICENSE file for details 
