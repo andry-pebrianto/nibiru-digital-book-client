@@ -10,10 +10,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider } from "react-redux";
 import { AxiosError } from "axios";
 import Router from "./router";
-import store from "./redux/store";
+import { store, persistor } from "./redux/store";
 import { showToastError } from "./utils/toast";
 import { getError } from "./utils/error";
 import "react-toastify/dist/ReactToastify.css";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryCLient = new QueryClient({
   queryCache: new QueryCache({
@@ -29,12 +30,14 @@ export default function App() {
   return (
     <Fragment>
       <Provider store={store}>
-        <QueryClientProvider client={queryCLient}>
-          <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
-            <Router />
-          </GoogleOAuthProvider>
-          <ReactQueryDevtools initialIsOpen={false} position="bottom" />
-        </QueryClientProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <QueryClientProvider client={queryCLient}>
+            <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
+              <Router />
+            </GoogleOAuthProvider>
+            <ReactQueryDevtools initialIsOpen={false} position="bottom" />
+          </QueryClientProvider>
+        </PersistGate>
       </Provider>
       <ToastContainer />
     </Fragment>

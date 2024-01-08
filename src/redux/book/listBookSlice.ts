@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BookCustomer } from "../../types";
 import { API } from "../../utils/api";
 import { getError } from "../../utils/error";
@@ -59,16 +57,13 @@ const listBookSlice = createSlice({
         state.total = action.payload.total;
       }
     );
-    builder.addCase(
-      getListBook.rejected,
-      (state, action: PayloadAction<any>) => {
-        state.data = [];
-        state.isLoading = false;
-        state.isError = true;
-        state.error = action.payload?.errorMessage || "Unknown Error Occured";
-        state.total = 0;
-      }
-    );
+    builder.addCase(getListBook.rejected, (state, action) => {
+      state.data = [];
+      state.isLoading = false;
+      state.isError = true;
+      state.error = (action.payload as { errorMessage: string }).errorMessage || "Unknown Error Occured";
+      state.total = 0;
+    });
   },
 });
 

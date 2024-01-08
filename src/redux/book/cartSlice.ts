@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BookAdmin } from "../../types";
 import { API } from "../../utils/api";
 import { getError } from "../../utils/error";
@@ -48,11 +46,11 @@ const cartSlice = createSlice({
         state.error = "";
       }
     );
-    builder.addCase(getCart.rejected, (state, action: PayloadAction<any>) => {
+    builder.addCase(getCart.rejected, (state, action) => {
       state.data = [];
       state.isLoading = false;
       state.isError = true;
-      state.error = action.payload?.errorMessage || "Unknown Error Occured";
+      state.error = (action.payload as { errorMessage: string }).errorMessage || "Unknown Error Occured";
     });
   },
 });
