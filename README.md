@@ -47,7 +47,7 @@ GOOGLE_CLIENT_ID=
 - [Nibiru Digital Book Demo](https://nibirudigitalbook.netlify.app/)
 
 <!-- CONTACT INFO -->
-## Contact Info
+## Contact Info 
 
 Contributors names and contact info:
 
