@@ -34,6 +34,7 @@ API_URL=
 MIDTRANS_CLIENT_KEY=
 MIDTRANS_APP_URL=
 GOOGLE_CLIENT_ID=
+ENCRYPT_SECRET=
 ```
 
 ### Executing program
@@ -44,7 +45,7 @@ GOOGLE_CLIENT_ID=
 ## Related Project
 
 - [Nibiru Digital Book API](https://github.com/andry-pebrianto/nibiru-digital-book-server)
-- [Nibiru Digital Book Demo](https://nibirudigitalbook.netlify.app/)
+- [Nibiru Digital Book Demo](https://nibirudigitalbook.andrypebrianto.com)
 
 <!-- CONTACT INFO -->
 ## Contact Info 
